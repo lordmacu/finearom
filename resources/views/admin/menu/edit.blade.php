@@ -1,0 +1,47 @@
+<x-admin.wrapper>
+    <x-slot name="title">
+            {{ __('Menus') }}
+    </x-slot>
+
+    <div>
+        <x-admin.breadcrumb href="{{route('admin.menu.index')}}" title="{{ __('Update Menu') }}"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"></path>
+            </svg></x-admin.breadcrumb>
+        <x-admin.form.errors />
+    </div>
+    <div class="w-full py-2 overflow-hidden cont-form">
+
+        <form method="POST" action="{{ route('admin.menu.update', $menu->id) }}">
+        @csrf
+        @method('PUT')
+
+            <div class="py-2">
+            <x-admin.form.label for="name" class="{{$errors->has('name') ? 'text-red-400' : ''}}">{{ __('Name') }}</x-admin.form.label>
+
+            <x-admin.form.input id="name" class="{{$errors->has('name') ? 'border-red-400' : ''}}"
+                                type="text"
+                                name="name"
+                                value="{{ old('name', $menu->name) }}"
+                                />
+            </div>
+
+            <div class="py-2">
+                <x-admin.form.label for="machine_name">{{ __('Machine name:') }} {{ $menu->machine_name }}</x-admin.form.label>
+            </div>
+
+            <div class="py-2">
+            <x-admin.form.label for="description" class="{{$errors->has('description') ? 'text-red-400' : ''}}">{{ __('Description') }}</x-admin.form.label>
+
+            <x-admin.form.input id="description" class="{{$errors->has('description') ? 'border-red-400' : ''}}"
+                                type="text"
+                                name="description"
+                                value="{{ old('name', $menu->description) }}"
+                                />
+            </div>
+
+            <div class="flex justify-end mt-4">
+                <x-admin.form.button>{{ __('Update') }}</x-admin.form.button>
+            </div>
+        </form>
+    </div>
+</x-admin.wrapper>

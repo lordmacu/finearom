@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.btn-primary {
+    --tw-border-opacity: 1;
+    border-color: hsl(219.29deg 94% 51%);
+    --tw-bg-opacity: 1;
+    background-color: hsl(206.87deg 100% 31.96%);
+    --tw-text-opacity: 1;
+    color: hsl(0deg 0% 96.85%);
+    outline-color: hsl(206.87deg 100% 31.96%);
+}
+.btn-primary:hover{
+    background-color: hsl(207, 91%, 23%);
+    border-color: hsl(207, 88%, 35%);
+}
+
+
