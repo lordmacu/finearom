@@ -22,7 +22,7 @@
         
 
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased {{ request()->segment(count(request()->segments())) }}">
 
         <div class="bg-base-100 drawer lg:drawer-open">
             <input id="drawer" type="checkbox" class="drawer-toggle">

@@ -17,7 +17,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased {{ request()->segment(count(request()->segments())) }}">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 

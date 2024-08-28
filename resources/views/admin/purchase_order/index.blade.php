@@ -11,7 +11,7 @@
 
     <div class="py-2">
         <form method="GET" action="{{ route('admin.purchase_orders.index') }}">
-            <div class="flex space-x-4 mb-4">
+            <div class="flex-table space-x-4 mb-4">
                 <!-- Cliente Dropdown -->
                 <div>
                     <label for="client_id" class="block text-sm font-medium text-gray-700">{{ __('Client') }}</label>

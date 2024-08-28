@@ -1,75 +1,87 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --my-color: #fff;
-}
-[data-theme='dark'] {
-  --my-color: #000;
-}
-.menu-icon svg {
-  width: 20px;
-  height: 20px;
+    --my-color: #fff;
 }
 
-#myModal{
-  position: absolute;
+[data-theme='dark'] {
+    --my-color: #000;
+}
+
+.menu-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+#myModal {
+    position: absolute;
 }
 
 .drawer-content {
-  position: relative;
+    position: relative;
 }
+
 @media only screen and (max-width: 1150px) {
-  .btn-primary,.btn-danger{
-    width: 100%;
-    margin-left: 0px;
-  margin-right: 0px;
-  }
-  .btn-secondary{
-    width: 100%;
-    margin-left: 0px;
-  margin-right: 0px;
-  }
-  td.content-action{
-    display: block!important;
-    width: 100%;
-  }
+
+    .btn-primary,
+    .btn-danger {
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .btn-secondary {
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    td.content-action {
+        display: block;
+        width: 100%;
+    }
 }
+
 .btn-secondary {
-  background: #6ecb87;
-  border: #80808000;
-  color: white;
+    background: #6ecb87;
+    border: #80808000;
+    color: white;
 }
+
 .btn-primary {
-  --tw-border-opacity: 1;
-  border-color: hsl(219.29deg 94% 51%);
-  --tw-bg-opacity: 1;
-  background-color: hsl(222.06deg 82.49% 55.03%);
-  --tw-text-opacity: 1;
-  color: hsl(0deg 0% 96.85%);
-  outline-color: hsl(236, 94%, 51%);
- 
+    --tw-border-opacity: 1;
+    border-color: hsl(219.29deg 94% 51%);
+    --tw-bg-opacity: 1;
+    background-color: hsl(222.06deg 82.49% 55.03%);
+    --tw-text-opacity: 1;
+    color: hsl(0deg 0% 96.85%);
+    outline-color: hsl(236, 94%, 51%);
+
 }
+
 .icon-purchase img {
-  border-radius: 100%;
-  width: 8rem;
-  height: 8rem;
-  object-fit: contain;
-  padding: 10px;
+    border-radius: 100%;
+    width: 8rem;
+    height: 8rem;
+    object-fit: contain;
+    padding: 10px;
 }
+
 .button-x {
-  position: relative;
-  bottom: -8px;
+    position: relative;
+    bottom: -8px;
 }
+
 .views-text {
-  text-transform: capitalize;
-  color: #8b8484;
+    text-transform: capitalize;
+    color: #8b8484;
 }
+
 .table {
-  display: table;
-  box-shadow: 0px 0px 20px 2px #d9d9d9;
+    display: table;
+    box-shadow: 0px 0px 20px 2px #d9d9d9;
 }
 
 td.icon-btn {
@@ -82,80 +94,281 @@ td.icon-btn {
 
 
 td.content-action {
-  display: flex;
-  column-gap: 13px;
+    display: flex;
+    column-gap: 13px;
 }
 
 .cont-form {
-  padding: 25px;
-  border: solid 1px #d1d1d1;
-  border-radius: 12px;
-  background: #2949830a;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+    padding: 25px;
+    border: solid 1px #d1d1d1;
+    border-radius: 12px;
+    background: #2949830a;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 
 }
+
 .cont-form input {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
+
 .mr-4 {
-  margin-right: 4%;
+    margin-right: 4%;
 }
-.btn-primary:hover{
-  background-color: hsl(219.29deg 75.63% 37.66%) !important;
-  border: solid 1px #80808000;
+
+.btn-primary:hover {
+    background-color: hsl(219.29deg 75.63% 37.66%) !important;
+    border: solid 1px #80808000;
 }
+
 .table-permissins .bg-base-200 {
-  background: #183d830d;
-  color: gray;
+    background: #183d830d;
+    color: gray;
 }
+
 .table-permissins a {
-  color: gray;
+    color: gray;
 }
+
 .table-permissins table.table {
-  margin-top: 1rem;
-  box-shadow: 1px 1px 1px #ff000000;
+    margin-top: 1rem;
+    box-shadow: 1px 1px 1px #ff000000;
 }
+
 .table-permissins .shadow {
-  box-shadow: none;
+    box-shadow: none;
 }
-.btn-secondary:hover{
-  background: #328147;
-    
+
+.btn-secondary:hover {
+    background: #328147;
+
 }
 
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: #444;
-  line-height: 38px !important;
+    color: #444;
+    line-height: 38px !important;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-  height: 38px !important;
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  width: 20px;
+    height: 38px !important;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 20px;
 }
 
 .select2-container--default .select2-selection--single {
-  background-color: #fff;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  height: 38px !important;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    height: 38px !important;
 }
 
 .select2-container--default .select2-selection--single {
-  background-color: #fff;
-  border: 1px solid rgb(209 213 219 / var(--tw-border-opacity)) !important;
-  border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid rgb(209 213 219 / var(--tw-border-opacity)) !important;
+    border-radius: 4px;
 }
 
 .select2-container {
-  box-sizing: border-box;
-  display: inline-block;
-  margin: 0;
-  position: relative;
-  vertical-align: middle;
-  margin-top: 5px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    margin-top: 5px;
+}
+
+@media only screen and (max-width: 900px) {
+    select.form-select {
+        width: 100%;
+        margin-top: 1rem;
+        position: relative;
+        left: -8px;
+        padding: 15px;
+        border-radius: 7px;
+    }
+
+    input.form-input {
+        width: 100%;
+        padding: 15px;
+        border-radius: 6px;
+    }
+
+    .items-center {
+        padding-left: 10px;
+        display: block;
+    }
+
+    label.block.text-gray-700.text-sm.font-bold.mb-2 {
+        font-size: 18px;
+        color: gray;
+        padding-bottom: 10px;
+    }
+
+    .border-base-200 button.btn.btn-primary {
+        margin-top: 15px;
+        position: relative;
+        left: -7px;
+        font-size: 22px;
+        padding-top: 1.5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .config select#filterProcess {
+        padding: 17px;
+        font-size: 19px;
+    }
+
+    tr,
+    th {
+        background: #e3e3e330;
+    }
+
+    .text-base {
+        line-height: 1.5rem;
+        padding: 23px;
+        font-size: 27px;
+    }
+
+    .flex.items-end button {
+        margin-top: 4rem;
+        width: 100%;
+        padding: 2rem;
+        margin-bottom: 3rem;
+        font-size: 2rem;
+    }
+
+    a.btn.px-6.normal-case.btn-primary {
+        padding: 2rem;
+        font-size: 22px;
+        line-height: 3px;
+    }
+
+    select#client_id {
+        width: 98%;
+        position: relative;
+        left: 16px;
+        font-size: 25px;
+        padding: 23px;
+
+    }
+
+    .grid a {
+        text-align: center;
+    }
+
+    span.text-base {
+        font-size: 35px;
+        line-height: 40px;
+    }
+
+    p.mt-1.text-3xl.leading-9.font-semibold.text-gray-900 {
+        font-size: 4.3rem;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .drawer-side {
+        height: 100%;
+    }
+
+    .drawer-side a {
+        font-size: 27px;
+        line-height: 3rem;
+    }
+
+    .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+        position: relative;
+        left: -29px;
+        top: 2.4rem;
+    }
+
+    h3.text-lg {
+        font-size: 2.5rem;
+        text-align: center;
+        padding-bottom: 25px;
+        line-height: 39px;
+    }
+
+    .navbar label.btn.btn-primary {
+        width: 81px;
+        margin-right: 22px;
+        background: #253d83;
+        border: none;
+    }
+
+    label.block.text-sm.font-medium.text-gray-700 {
+        font-size: 30px;
+        padding: 32px;
+        color: gray;
+        position: relative;
+        left: -22px;
+    }
+
+    .table-permissins .flex {
+        display: block;
+        width: 101%;
+        text-align: center;
+    }
+
+    a.btn.px-6.normal-case.btn-primary {
+        padding: 2rem;
+        font-size: 22px;
+        line-height: 3px;
+
+    }
+
+    td.p-4 {
+        font-size: 25px;
+        line-height: 32px;
+    }
+
+    h2.font-semibold.text-xl.text-gray-800.leading-tight {
+        font-size: 30px;
+    }
+
+    h1.text-2xl.font-semibold.ml-2 {
+        font-size: 30px;
+    }
+
+    .admin td.px-6.py-4.whitespace-nowrap {
+        font-size: 23px;
+        scroll-behavior: auto;
+    }
+
+    .menu,
+    .type td.p-4 {
+        font-size: 24px;
+    }
+
+    label.swap {
+        position: relative;
+        left: 19px;
+    }
+
+    .table-permissins a {
+        color: gray;
+        font-size: 21px;
+        display: flex;
+    }
+
+}
+
+@media (min-width: 1250px) {
+    .flex-table {
+        display: flex;
+    }
+}
+
+.text-gray-800 {
+    --tw-text-opacity: 1;
+    color: rgb(165 163 163);
 }
