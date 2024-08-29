@@ -73,7 +73,7 @@
                         </label>
                         <div class="dropdown dropdown-end ml-4">
                             <label tabindex="0" class="btn btn-ghost">
-                                <div>{{ Auth::user()->name }}</div>
+                                <div class="d-sm-none">{{ Auth::user()->name }}</div>
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"

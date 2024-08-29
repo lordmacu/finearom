@@ -82,16 +82,23 @@
                     <table class="min-w-full divide-y divide-gray-200 mb-4">
                         <thead class="bg-gray-50">
                             <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                           
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                            </tr>
+                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($latestOrders as $purchaseOrder)
+                            
                             <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <a href="{{ url('/admin/purchase_orders/' . $purchaseOrder->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                                        Ver
+                                    </a>
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $purchaseOrder->created_at->format('d/m/Y') }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $purchaseOrder->client->client_name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -99,6 +106,7 @@
                                         {{ ucfirst($purchaseOrder->status) }}
                                     </span>
                                 </td>
+                                
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     @php
                                         $total = $purchaseOrder->products->sum(function($product) use($purchaseOrder) {
@@ -107,11 +115,7 @@
                                     @endphp
                                     {{ number_format($total, 2, ',', '.') }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ url('/admin/purchase_orders/' . $purchaseOrder->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
-                                        Ver
-                                    </a>
-                                </td>
+                               
                             </tr>
                             @endforeach
                         </tbody>

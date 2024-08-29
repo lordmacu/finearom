@@ -183,21 +183,21 @@ td.content-action {
 @media only screen and (max-width: 900px) {
     select.form-select {
         width: 100%;
-        margin-top: 1rem;
+        margin-top: 10px;
         position: relative;
         left: -8px;
-        padding: 15px;
+        padding: 8px;
         border-radius: 7px;
     }
 
     input.form-input {
         width: 100%;
-        padding: 15px;
+        padding: 10px;
         border-radius: 6px;
     }
 
     .items-center {
-        padding-left: 10px;
+      
         display: block;
     }
 
@@ -208,12 +208,17 @@ td.content-action {
     }
 
     .border-base-200 button.btn.btn-primary {
-        margin-top: 15px;
+        margin-top: 10px;
         position: relative;
         left: -7px;
-        font-size: 22px;
-        padding-top: 1.5rem;
-        padding-bottom: 2.5rem;
+
+    }
+
+    .client .border-base-200 button.btn.btn-primary {
+        margin-top: 10px;
+        position: relative;
+        left: 0px;
+
     }
 
     .config select#filterProcess {
@@ -226,46 +231,44 @@ td.content-action {
         background: #e3e3e330;
     }
 
-    .text-base {
-        line-height: 1.5rem;
-        padding: 23px;
-        font-size: 27px;
-    }
+
 
     .flex.items-end button {
         margin-top: 4rem;
         width: 100%;
-        padding: 2rem;
+
         margin-bottom: 3rem;
-        font-size: 2rem;
+
     }
 
     a.btn.px-6.normal-case.btn-primary {
-        padding: 2rem;
-        font-size: 22px;
+        padding: 1rem;
         line-height: 3px;
+        position: relative;
+        left: 5px;
     }
 
     select#client_id {
-        width: 98%;
+        width: 94%;
         position: relative;
         left: 16px;
-        font-size: 25px;
-        padding: 23px;
+        font-size: 15px;
+        padding: 10px;
 
+    }
+
+    h1.text-2xl.font-semibold.ml-2 {
+        font-size: 15px;
     }
 
     .grid a {
         text-align: center;
     }
 
-    span.text-base {
-        font-size: 35px;
-        line-height: 40px;
-    }
+
 
     p.mt-1.text-3xl.leading-9.font-semibold.text-gray-900 {
-        font-size: 4.3rem;
+        font-size: 4rem;
         text-align: center;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -274,12 +277,15 @@ td.content-action {
     .drawer-side {
         height: 100%;
     }
-    .drawer{
-      display: block!important;
+
+    .drawer {
+        display: block !important;
     }
+
     .drawer-side a {
-        font-size: 27px;
-        line-height: 3rem;
+        font-size: 20px;
+        line-height: 1rem;
+        padding-top: 14px;
     }
 
     .status-indicator {
@@ -294,7 +300,7 @@ td.content-action {
     }
 
     h3.text-lg {
-        font-size: 2.5rem;
+        font-size: 20px;
         text-align: center;
         padding-bottom: 25px;
         line-height: 39px;
@@ -308,11 +314,11 @@ td.content-action {
     }
 
     label.block.text-sm.font-medium.text-gray-700 {
-        font-size: 30px;
-        padding: 32px;
+
+        padding: 10px;
         color: gray;
         position: relative;
-        left: -22px;
+        text-align: center;
     }
 
     .table-permissins .flex {
@@ -321,35 +327,13 @@ td.content-action {
         text-align: center;
     }
 
-    a.btn.px-6.normal-case.btn-primary {
-        padding: 2rem;
-        font-size: 22px;
-        line-height: 3px;
-
-    }
-
-    td.p-4 {
-        font-size: 25px;
-        line-height: 32px;
-    }
-
-    h2.font-semibold.text-xl.text-gray-800.leading-tight {
-        font-size: 30px;
-    }
-
-    h1.text-2xl.font-semibold.ml-2 {
-        font-size: 30px;
-    }
 
     .admin td.px-6.py-4.whitespace-nowrap {
-        font-size: 23px;
+        font-size: 19px;
         scroll-behavior: auto;
     }
 
-    .menu,
-    .type td.p-4 {
-        font-size: 24px;
-    }
+    
 
     label.swap {
         position: relative;
@@ -362,11 +346,27 @@ td.content-action {
         display: flex;
     }
 
+    .d-sm-none {
+        display: none;
+    }
+
+    .d-lg-none {
+        display: block;
+    }
+
 }
 
 @media (min-width: 1250px) {
     .flex-table {
         display: flex;
+    }
+
+    .d-lg-none {
+        display: none;
+    }
+
+    .d-sm-none {
+        display: block;
     }
 }
 

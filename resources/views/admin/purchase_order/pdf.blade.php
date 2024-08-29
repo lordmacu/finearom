@@ -224,7 +224,7 @@
             </tbody>
         </table>
 
-        <div style="margin-top: 50px">
+        <div style="margin-top: 50px relative overflow-x-auto">
             <table class="table">
                 <thead>
                     <tr style="border-bottom: 2px solid #ebebeb; background-color:#e1e1e1;">

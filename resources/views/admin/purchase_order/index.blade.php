@@ -14,9 +14,9 @@
             <div class="flex-table space-x-4 mb-4">
                 <!-- Cliente Dropdown -->
                 <div>
-                    <label for="client_id" class="block text-sm font-medium text-gray-700">{{ __('Client') }}</label>
+                    <label for="client_id" class="block text-sm font-medium text-gray-700">{{ __('Cliente') }}</label>
                     <select id="client_id" name="client_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="">{{ __('Select Client') }}</option>
+                        <option value="">{{ __('Seleccion de Cliente') }}</option>
                         @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ request('client_id') == $client->id ? 'selected' : '' }}>{{ $client->client_name }}</option>
                         @endforeach
@@ -24,17 +24,17 @@
                 </div>
                 <!-- Fecha de Creación -->
                 <div>
-                    <label for="creation_date" class="block text-sm font-medium text-gray-700">{{ __('Creation Date') }}</label>
+                    <label for="creation_date" class="block text-sm font-medium text-gray-700">{{ __('Fecha de Creacion') }}</label>
                     <input type="text" id="creation_date" name="creation_date" value="{{ request('creation_date') }}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base daterangepicker border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 </div>
                 <!-- Fecha de Entrega -->
                 <div>
-                    <label for="delivery_date" class="block text-sm font-medium text-gray-700">{{ __('Delivery Date') }}</label>
+                    <label for="delivery_date" class="block text-sm font-medium text-gray-700">{{ __('Fecha de entrega') }}</label>
                     <input type="text" id="delivery_date" name="delivery_date" value="{{ request('delivery_date') }}" class="mt-1 block w-full pl-3 pr-10 py-2 daterangepicker text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 </div>
                 <!-- Consecutivo -->
                 <div>
-                    <label for="order_consecutive" class="block text-sm font-medium text-gray-700">{{ __('Consecutive') }}</label>
+                    <label for="order_consecutive" class="block text-sm font-medium text-gray-700">{{ __('Consecutivo') }}</label>
                     <input type="text" id="order_consecutive" name="order_consecutive" value="{{ request('order_consecutive') }}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 </div>
                 <!-- Estado de la Orden -->
@@ -42,11 +42,11 @@
                     <label for="status" class="block text-sm font-medium text-gray-700">{{ __('Status') }}</label>
                     <select id="status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                         <option value="">{{ __('Select Status') }}</option>
-                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
-                        <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>{{ __('Processing') }}</option>
-                        <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{ __('Completed') }}</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{ __('Pendiente') }}</option>
+                        <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>{{ __('Procesos') }}</option>
+                        <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{ __('Completado') }}</option>
                         <option value="parcial_status" {{ request('status') == 'parcial_status' ? 'selected' : '' }}>{{ __('Parcial') }}</option>
-                        <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelled') }}</option>
+                        <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelado') }}</option>
                     </select>
                 </div>
                 <!-- Botón de Búsqueda -->
@@ -68,7 +68,7 @@
                         @endphp
                         <x-admin.grid.th>
                             <a href="{{ route('admin.purchase_orders.index', array_merge(request()->all(), ['sort_by' => 'order_consecutive', 'sort_order' => $sortOrder === 'asc' && $sortBy === 'order_consecutive' ? 'desc' : 'asc'])) }}">
-                                {{ __('Consecutive') }}
+                                {{ __('Consecutivo') }}
                                 @if ($sortBy === 'order_consecutive')
                                     @if ($sortOrder === 'asc')
                                         ▲
@@ -80,7 +80,7 @@
                         </x-admin.grid.th>
                         <x-admin.grid.th>
                             <a href="{{ route('admin.purchase_orders.index', array_merge(request()->all(), ['sort_by' => 'client_id', 'sort_order' => $sortOrder === 'asc' && $sortBy === 'client_id' ? 'desc' : 'asc'])) }}">
-                                {{ __('Client') }}
+                                {{ __('Cliente') }}
                                 @if ($sortBy === 'client_id')
                                     @if ($sortOrder === 'asc')
                                         ▲
@@ -92,7 +92,7 @@
                         </x-admin.grid.th>
                         <x-admin.grid.th>
                             <a href="{{ route('admin.purchase_orders.index', array_merge(request()->all(), ['sort_by' => 'required_delivery_date', 'sort_order' => $sortOrder === 'asc' && $sortBy === 'required_delivery_date' ? 'desc' : 'asc'])) }}">
-                                {{ __('Delivery Date') }}
+                                {{ __('Fecha de entrega') }}
                                 @if ($sortBy === 'required_delivery_date')
                                     @if ($sortOrder === 'asc')
                                         ▲
@@ -116,7 +116,7 @@
                         </x-admin.grid.th>
                         <x-admin.grid.th>
                             <a href="{{ route('admin.purchase_orders.index', array_merge(request()->all(), ['sort_by' => 'status', 'sort_order' => $sortOrder === 'asc' && $sortBy === 'status' ? 'desc' : 'asc'])) }}">
-                                {{ __('Status') }}
+                                {{ __('Estado') }}
                                 @if ($sortBy === 'status')
                                     @if ($sortOrder === 'asc')
                                         ▲
@@ -127,7 +127,7 @@
                             </a>
                         </x-admin.grid.th>
                         <x-admin.grid.th>
-                            {{ __('Actions') }}
+                            {{ __('Comportamiento') }}
                         </x-admin.grid.th>
                     </tr>
                 </x-slot>

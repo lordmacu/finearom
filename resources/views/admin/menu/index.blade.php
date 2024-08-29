@@ -12,6 +12,7 @@
     <div class="py-2 table-permissins">
         <div class="min-w-full  border-base-200 shadow overflow-x-auto">
             <x-admin.grid.search action="{{ route('admin.menu.index') }}" />
+           <div class="relative overflow-x-auto">
             <x-admin.grid.table>
                 <x-slot name="head">
                     <tr class="bg-base-200">
@@ -97,6 +98,7 @@
                     @endif
                 </x-slot>
             </x-admin.grid.table>
+        </div>
         </div>
         <div class="py-8">
             {{ $menus->appends(request()->query())->links() }}

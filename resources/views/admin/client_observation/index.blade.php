@@ -1,16 +1,16 @@
 <x-admin.wrapper>
     <x-slot name="title">
-        {{ __('Client Observations') }}
+        {{ __('Observaciones del Cliente') }}
     </x-slot>
 
     <div class="d-print-none with-border">
-        <x-admin.breadcrumb href="{{ route('admin.client.index') }}" title="{{ __('Client Observations') }}"><svg
+        <x-admin.breadcrumb href="{{ route('admin.client.index') }}" title="{{ __('Observaciones del Cliente') }}"><svg
                 class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M13 5H1m0 0 4 4M1 5l4-4" />
             </svg></x-admin.breadcrumb>
-        aquii
+        aquí
     </div>
 
     <div class="py-2">
@@ -18,21 +18,21 @@
             <x-admin.grid.table>
                 <x-slot name="head">
                     <tr class="bg-base-200">
-                        <x-admin.grid.th>{{ __('Requires Physical Invoice') }}</x-admin.grid.th>
-                        <x-admin.grid.th>{{ __('Packaging Unit') }}</x-admin.grid.th>
-                        <x-admin.grid.th>{{ __('Requires Appointment') }}</x-admin.grid.th>
-                        <x-admin.grid.th>{{ __('Additional Observations') }}</x-admin.grid.th>
+                        <x-admin.grid.th>{{ __('Requiere Factura Física') }}</x-admin.grid.th>
+                        <x-admin.grid.th>{{ __('Unidad de Embalaje') }}</x-admin.grid.th>
+                        <x-admin.grid.th>{{ __('Requiere Cita') }}</x-admin.grid.th>
+                        <x-admin.grid.th>{{ __('Observaciones Adicionales') }}</x-admin.grid.th>
                         @canany(['client_observation edit', 'client_observation delete'])
-                            <x-admin.grid.th>{{ __('Actions') }}</x-admin.grid.th>
+                            <x-admin.grid.th>{{ __('Acciones') }}</x-admin.grid.th>
                         @endcanany
                     </tr>
                 </x-slot>
                 <x-slot name="body">
                     @foreach($observations as $observation)
                         <tr>
-                            <td>{{ $observation->requires_physical_invoice ? 'Yes' : 'No' }}</td>
+                            <td>{{ $observation->requires_physical_invoice ? 'Sí' : 'No' }}</td>
                             <td>{{ $observation->packaging_unit }}</td>
-                            <td>{{ $observation->requires_appointment ? 'Yes' : 'No' }}</td>
+                            <td>{{ $observation->requires_appointment ? 'Sí' : 'No' }}</td>
                             <td>{{ $observation->additional_observations }}</td>
                             @canany(['client_observation edit', 'client_observation delete'])
                                 <td>
@@ -66,7 +66,7 @@
                         <tr>
                             <td colspan="5">
                                 <div class="flex flex-col justify-center items-center py-4 text-lg">
-                                    {{ __('No Observations Found') }}
+                                    {{ __('No se encontraron observaciones') }}
                                 </div>
                             </td>
                         </tr>

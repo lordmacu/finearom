@@ -9,7 +9,7 @@
 </svg></x-admin.breadcrumb> 
     </div>
     <div class="w-full py-2">
-        <div class="min-w-full border-base-200 shadow">
+        <div class="min-w-full border-base-200 shadow relative overflow-x-auto">
             <table class="table">
                 <tbody>
                     <tr>
@@ -31,7 +31,7 @@
     </x-admin.add-link>
     @endcan
     
-    <div class="py-2">
+    <div class="py-2 relative overflow-x-auto">
         <div class="min-w-full  border-base-200 shadow overflow-x-auto">
             <x-admin.grid.table>
                 <x-slot name="head">
