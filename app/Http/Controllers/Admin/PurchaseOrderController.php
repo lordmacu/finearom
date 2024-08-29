@@ -214,6 +214,10 @@ class PurchaseOrderController extends Controller
             }
 
             $purchaseOrderData['order_creation_date'] = $currentDate;
+            
+            if( $request->get('trm_initial') != $request->get('trm')){
+                $purchaseOrderData['trm_updated_at'] = $currentDate;
+            }
 
             $purchaseOrder = PurchaseOrder::create($purchaseOrderData);
             $purchaseOrder->order_consecutive = $purchaseOrder->id.'-'.$purchaseOrder->order_consecutive;

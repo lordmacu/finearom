@@ -21,7 +21,7 @@
                                             Consecutivo de la Orden
                                         </label>
                                         <input v-model="orderConsecutive" type="text"
-                                            :disabled="purchaseOrder !== null"
+                                            :disabled="purchaseOrder === null"
                                             :class="[errors.order_consecutive ? 'border-red-500' : 'border-gray-300', 'rounded', 'px-2', 'ml-2']" />
                                     </div>
                                 </div>
@@ -271,6 +271,7 @@
             attachment: null,
             attachmentUrl: this.purchaseOrder?.attachment ? `/storage/${this.purchaseOrder.attachment}` : null,
             errors: {},
+            trmInitial:0
 
         };
     },
@@ -429,6 +430,7 @@
                 formData.append('phone', this.phone);
                 formData.append('observations', this.observations);
                 formData.append('trm', this.trmCalculated);
+                formData.append('trm_initial', this.trmSaved);
                 //   formData.append('products', JSON.stringify(this.products));
                 this.products.forEach((product, index) => {
                     formData.append(`products[${index}][product_id]`, product.product_id);
@@ -451,12 +453,11 @@
                         },
                     });
 
-                    console.log('Form submitted successfully:', response.data);
                     const purchaseOrderId = response.data.purchase_order_id;
                     if (this.purchaseOrder == null) {
                         this.$swal('Se ha creado la orden de compra con éxito!', { icon: 'success' });
 
-                        window.location.href = `/admin/purchase_orders/${purchaseOrderId}/edit`;
+                     //   window.location.href = `/admin/purchase_orders/${purchaseOrderId}/edit`;
                     } else {
                         this.$swal('Se ha actualizado la orden de compra con éxito!', { icon: 'success' });
                     }
@@ -541,8 +542,6 @@
                 }
             });
         }
-
-        console.log('aquiii esta el purchase order:', this.purchaseOrder);
         this.trmSaved = this.trmCalculated;
     },
 };

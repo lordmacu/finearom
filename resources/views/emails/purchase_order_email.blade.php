@@ -55,7 +55,14 @@
         </tbody>
     </table>
 
-    <p><strong>TRM:</strong> Del día {{ optional($purchaseOrder->trm_updated_at ?: $purchaseOrder->created_at)->format('d/m/Y') }} por ${{ number_format($purchaseOrder->trm, 2) }}</p>
+    <p><strong>TRM:</strong> 
+        @if($purchaseOrder->trm_updated_at)
+            Trm de cliente ${{ number_format($purchaseOrder->trm, 2) }}
+        @else
+            Trm del día {{ optional($purchaseOrder->created_at)->format('d/m/Y') }} por ${{ number_format($purchaseOrder->trm, 2) }}
+        @endif
+    </p>
+    
     <p><strong>Observaciones:</strong> {{ $purchaseOrder->observations }}</p>
     <p>Condiciones de Compra:</p>
     <ul>

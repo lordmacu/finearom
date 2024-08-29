@@ -24,7 +24,8 @@ class PurchaseOrder extends Model
         'invoice_number',        // Nuevo campo
         'dispatch_date',         // Nuevo campo
         'tracking_number',       // Nuevo campo
-        'observations_extra',    // Nuevo campo
+        'observations_extra',    // Nuevo campov
+        'trm_updated_at'
     ];
 
     public function client()
