@@ -274,7 +274,9 @@ td.content-action {
     .drawer-side {
         height: 100%;
     }
-
+    .drawer{
+      display: block!important;
+    }
     .drawer-side a {
         font-size: 27px;
         line-height: 3rem;
