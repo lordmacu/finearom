@@ -75,6 +75,21 @@
                 
             </div>
 
+            <div class="mb-4">
+                <form method="GET" action="{{ url('/admin') }}">
+                    <select name="filter_type" id="filter_type" onchange="this.form.submit()">
+                        <option value="" disabled selected>Filtrar por</option>
+                        <option value="date" {{ request('filter_type') == 'date' ? 'selected' : '' }}>Fecha</option>
+                        <option value="total" {{ request('filter_type') == 'total' ? 'selected' : '' }}>Total</option>
+                    </select>
+
+                    <select name="sort_direction" id="sort_direction" onchange="this.form.submit()">
+                        <option value="desc" {{ request('sort_direction') == 'desc' ? 'selected' : '' }}>Descendente</option>
+                        <option value="asc" {{ request('sort_direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
+                    </select>
+                </form>
+            </div>
+
             <!-- Latest Orders Section -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Últimas Ordenes Creadas</h3>

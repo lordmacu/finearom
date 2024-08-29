@@ -8,20 +8,31 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-
-      /**
+    /**
      * Show the admin dashboard with purchase orders information.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        // Get the start and end of the current month
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
+        $query = PurchaseOrder::query();
+
+        // Check for filter input
+        $filterType = request('filter_type');
+        $sortDirection = request('sort_direction', 'desc'); // Default to descending
+
+        if ($filterType === 'date') {
+
+            $query->orderBy('created_at', $sortDirection);
+        } elseif ($filterType === 'total') {
+            $query->withSum('products as total_price', \DB::raw('price * quantity'))
+                  ->orderBy('total_price', $sortDirection);
+        }
 
         // Fetch all purchase orders for the current month with eager loading of products and client
-        $allOrders = PurchaseOrder::whereBetween('order_creation_date', [$startOfMonth, $endOfMonth])
+        $allOrders = $query->whereBetween('order_creation_date', [$startOfMonth, $endOfMonth])
             ->with('products', 'client')
             ->get();
 
@@ -83,10 +94,21 @@ class DashboardController extends Controller
         }, 0);
 
         // Fetch the last 10 orders
-        $latestOrders = PurchaseOrder::orderBy('created_at', 'desc')
-            ->take(10)
-            ->with('client')
-            ->get();
+        if ($filterType === 'total') {
+            $latestOrders = $query->with('products')
+                ->withSum('products as total_price', \DB::raw('price * quantity'))
+                ->orderBy('total_price', $sortDirection)
+                ->take(10)
+                ->with('client')
+                ->get();
+        } else {
+            // Ordenar por fecha de creación
+
+            $latestOrders = $query->orderBy('created_at', $sortDirection)
+                ->take(10)
+                ->with('client')
+                ->get();
+        }
 
         return view('admin.dashboard', compact(
             'allOrders',
@@ -101,9 +123,9 @@ class DashboardController extends Controller
             'totalPricePendingDollars',
             'totalPriceProcessingMonth',
             'totalPriceProcessingDollars',
-            'latestOrders'
+            'latestOrders',
+            'filterType',
+            'sortDirection'
         ));
     }
-    
-
 }
