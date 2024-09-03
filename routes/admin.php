@@ -59,6 +59,7 @@ Route::group([
     Route::delete('client/{clientId}/branch_offices/{id}', [App\Http\Controllers\Admin\BranchOfficeController::class, 'destroy'])->name('branch_offices.destroy');
 
     Route::get('products/export', [App\Http\Controllers\Admin\ProductController::class, 'exportExcel'])->name('product_export');
+    Route::get('clients/export', [App\Http\Controllers\Admin\ClientController::class, 'exportExcel'])->name('admin.clients.export');
 
     Route::get('config', [App\Http\Controllers\Admin\AdminConfigurationController::class, 'index'])->name('config.index');
     Route::post('config', [App\Http\Controllers\Admin\AdminConfigurationController::class, 'store'])->name('config.store');

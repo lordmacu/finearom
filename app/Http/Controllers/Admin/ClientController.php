@@ -8,6 +8,9 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Exports\ClientsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ClientController extends Controller
 {
@@ -43,6 +46,11 @@ class ClientController extends Controller
     
         return view('admin.client.index', compact('clients'));
     }
+
+    public function exportExcel()
+{
+    return Excel::download(new ClientsExport, 'clients.xlsx');
+}
 
     public function create()
     {

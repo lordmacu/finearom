@@ -2,6 +2,7 @@
     <x-slot name="title">
         {{ __('Clientes') }}
     </x-slot>
+    <a href="/admin/clients/export" class="btn btn-success">Exportar clientes</a>
 
     <div class="flex justify-between items-center py-2">
         <div>
