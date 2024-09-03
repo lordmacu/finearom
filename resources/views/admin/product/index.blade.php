@@ -13,31 +13,36 @@
         </x-admin.add-link>
     @endcan
 
+    <div class="flex justify-between items-center py-2">
+        <div>
+            <form method="GET" action="{{ route('admin.product.index') }}">
+                <div class="">
+                    <input type="text" name="search" placeholder="{{ __('Buscar por codigo o nombre de producto') }}"
+                           class="form-input" value="{{ request()->input('search') }}">
+                    <select name="client_id" class="form-select">
+                        <option value="">{{ __('Select Client') }}</option>
+                        @foreach($clients as $client)
+                            <option value="{{ $client->id }}" {{ request()->input('client_id') == $client->id ? 'selected' : '' }}>
+                                {{ $client->client_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <select id="product-select" name="product_id" class="form-select" style="width: 100%">
+                        <option value="">{{ __('Select Product') }}</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">{{ __('Buscar') }}</button>
+                    <a href="/admin/product" class="btn btn-secondary">{{ __('Reset') }}</a>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
     
     <div class="py-2">
-        <form method="GET" action="{{ route('admin.product.index') }}">
-            <div class="flex items-center space-x-2">
-                <input type="text" name="search" placeholder="{{ __('Search by code or product name') }}"
-                       class="form-input" value="{{ request()->input('search') }}">
-                <select name="client_id" class="form-select">
-                    <option value="">{{ __('Select Client') }}</option>
-                    @foreach($clients as $client)
-                        <option value="{{ $client->id }}" {{ request()->input('client_id') == $client->id ? 'selected' : '' }}>
-                            {{ $client->client_name }}
-                        </option>
-                    @endforeach
-                </select>
-                <select name="product_id" class="form-select">
-                    <option value="">{{ __('Select Product') }}</option>
-                    @foreach($products as $product)
-                        <option value="{{ $product->id }}" {{ request()->input('product_id') == $product->id ? 'selected' : '' }}>
-                            {{ $product->product_name }}
-                        </option>
-                    @endforeach
-                </select>
-                <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
-            </div>
-        </form>
+  
 
         <div class="min-w-full border-base-200 shadow overflow-x-auto mt-4">
             <x-admin.grid.table>
@@ -152,4 +157,56 @@
             {{ $products->appends(request()->except('page'))->links() }}
         </div>
     </div>
+
+    <script>
+
+$(document).ready(function() {
+    $('select').select2({width:200});
+    
+
+        // Inicializar Select2
+        $('#product-select').select2({
+            width:200,
+            ajax: {
+                url: '/admin/ajax/products', // URL del método AJAX en el backend
+                dataType: 'json',
+                delay: 250, // Retraso para esperar mientras el usuario escribe
+                data: function (params) {
+                    return {
+                        search: params.term // Término de búsqueda
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data // Devuelve los resultados en el formato esperado por Select2
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Search for a product', // Texto por defecto
+            minimumInputLength: 1, // Número mínimo de caracteres antes de iniciar la búsqueda
+        });
+
+        var productId = new URLSearchParams(window.location.search).get('product_id');
+
+        if (productId) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/ajax/products', // URL del método AJAX en el backend
+                data: { search: productId },
+                dataType: 'json'
+            }).then(function(data) {
+                var product = data.find(p => p.id == productId);
+                if (product) {
+                    var option = new Option(product.text, product.id, true, true);
+                    $('#product-select').append(option).trigger('change');
+                }
+            });
+        }
+    });
+
+
+    </script>
+
+
 </x-admin.wrapper>

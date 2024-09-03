@@ -23,6 +23,8 @@ class ProductController extends Controller
     {
         $products_query = Product::query();
         $clients = Client::all();
+        $productsAll = Product::all();
+
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -51,8 +53,33 @@ class ProductController extends Controller
                                    ->appends($request->except('page'))
                                    ->onEachSide(config('admin.paginate.each_side'));
 
-        return view('admin.product.index', compact('products', 'clients'));
+        return view('admin.product.index', compact('products', 'clients','productsAll'));
     }
+
+    public function ajaxProducts(Request $request)
+{
+    $search = $request->input('search');
+
+    $products = Product::query();
+
+    // Si existe una búsqueda, filtramos los productos
+    if ($search) {
+        $products->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', "%{$search}%")
+                  ->orWhere('code', 'LIKE', "%{$search}%")
+                  ->orWhere('id', $search); // Esto permite buscar directamente por ID si es necesario
+        });
+    }
+
+    // Seleccionamos los campos necesarios para Select2
+    $result = $products->select('id', 'product_name as text') // 'text' es requerido por Select2
+                       ->limit(10) // Limita el número de resultados
+                       ->get();
+
+    // Retornamos el resultado como un JSON
+    return response()->json($result);
+}
+
 
     public function create()
     {

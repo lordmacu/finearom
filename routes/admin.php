@@ -61,7 +61,8 @@ Route::group([
     Route::get('products/export', [App\Http\Controllers\Admin\ProductController::class, 'exportExcel'])->name('product_export');
     Route::get('clients/export', [App\Http\Controllers\Admin\ClientController::class, 'exportExcel'])->name('admin.clients.export');
     Route::get('branch-offices/export', [App\Http\Controllers\Admin\BranchOfficeController::class, 'exportExcel'])->name('admin.branch-offices.export');
-
+    Route::get('ajax/products', [App\Http\Controllers\Admin\ProductController::class, 'ajaxProducts'])->name('admin.ajax.products');
+    
     Route::get('config', [App\Http\Controllers\Admin\AdminConfigurationController::class, 'index'])->name('config.index');
     Route::post('config', [App\Http\Controllers\Admin\AdminConfigurationController::class, 'store'])->name('config.store');
 });

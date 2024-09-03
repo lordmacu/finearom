@@ -19,6 +19,7 @@ class BranchOfficesExport implements FromCollection, WithHeadings
                     'delivery_address' => $branchOffice->delivery_address,
                     'delivery_city' => $branchOffice->delivery_city,
                     'client_name' => $branchOffice->client->client_name ?? '', // Safeguard against null client
+                    'operation' => '',
                 ];
             });
     }
@@ -31,6 +32,7 @@ class BranchOfficesExport implements FromCollection, WithHeadings
             'Delivery Address',
             'Delivery City',
             'Client Name',
+            'Operation',
         ];
     }
 }

@@ -21,7 +21,7 @@ class ProductImport implements ToModel, WithHeadingRow
     
                 // Si no se encuentra el cliente, lanzar una excepción
                 if (!$client) {
-                    throw new \Exception($row['nit']);
+                    throw new \Exception("No existe cliente");
                 }
     
                 // Verificar si el producto ya existe por código
