@@ -1,6 +1,6 @@
 <x-admin.wrapper>
     <x-slot name="title">
-        {{ __('Ordenes de compra') }}
+        {{ __('Órdenes de compra') }}
     </x-slot>
 
     @can('purchase_order create')
@@ -16,7 +16,7 @@
                 <div>
                     <label for="client_id" class="block text-sm font-medium text-gray-700">{{ __('Cliente') }}</label>
                     <select id="client_id" name="client_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="">{{ __('Seleccion de Cliente') }}</option>
+                        <option value="">{{ __('Selección de Cliente') }}</option>
                         @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ request('client_id') == $client->id ? 'selected' : '' }}>{{ $client->client_name }}</option>
                         @endforeach
@@ -24,12 +24,12 @@
                 </div>
                 <!-- Fecha de Creación -->
                 <div>
-                    <label for="creation_date" class="block text-sm font-medium text-gray-700">{{ __('Fecha de Creacion') }}</label>
+                    <label for="creation_date" class="block text-sm font-medium text-gray-700">{{ __('Fecha de Creación') }}</label>
                     <input type="text" id="creation_date" name="creation_date" value="{{ request('creation_date') }}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base daterangepicker border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 </div>
                 <!-- Fecha de Entrega -->
                 <div>
-                    <label for="delivery_date" class="block text-sm font-medium text-gray-700">{{ __('Fecha de entrega') }}</label>
+                    <label for="delivery_date" class="block text-sm font-medium text-gray-700">{{ __('Fecha de Entrega') }}</label>
                     <input type="text" id="delivery_date" name="delivery_date" value="{{ request('delivery_date') }}" class="mt-1 block w-full pl-3 pr-10 py-2 daterangepicker text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 </div>
                 <!-- Consecutivo -->
@@ -39,11 +39,11 @@
                 </div>
                 <!-- Estado de la Orden -->
                 <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700">{{ __('Status') }}</label>
+                    <label for="status" class="block text-sm font-medium text-gray-700">{{ __('Estado') }}</label>
                     <select id="status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option value="">{{ __('Select Status') }}</option>
+                        <option value="">{{ __('Seleccionar Estado') }}</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{ __('Pendiente') }}</option>
-                        <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>{{ __('Procesos') }}</option>
+                        <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>{{ __('En Proceso') }}</option>
                         <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>{{ __('Completado') }}</option>
                         <option value="parcial_status" {{ request('status') == 'parcial_status' ? 'selected' : '' }}>{{ __('Parcial') }}</option>
                         <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelado') }}</option>
@@ -52,7 +52,7 @@
                 <!-- Botón de Búsqueda -->
                 <div class="flex items-end">
                     <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        {{ __('Search') }}
+                        {{ __('Buscar') }}
                     </button>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                         </x-admin.grid.th>
                         <x-admin.grid.th>
                             <a href="{{ route('admin.purchase_orders.index', array_merge(request()->all(), ['sort_by' => 'required_delivery_date', 'sort_order' => $sortOrder === 'asc' && $sortBy === 'required_delivery_date' ? 'desc' : 'asc'])) }}">
-                                {{ __('Fecha de entrega') }}
+                                {{ __('Fecha de Entrega') }}
                                 @if ($sortBy === 'required_delivery_date')
                                     @if ($sortOrder === 'asc')
                                         ▲
@@ -146,19 +146,17 @@
                                 {{ number_format($total, 2, ',', '.') }}
                             </td>
                             <td>
-                               
-                                    <div class="flex items-center">
-                                        <span class="status-indicator {{ $purchaseOrder->status }}"></span>
-                                        <select style="width: 100px" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                                            onchange="handleStatusChange(this, '{{ $purchaseOrder->id }}', '{{ $purchaseOrder->order_consecutive }}', '{{ $purchaseOrder->status }}')">
-                                            <option value="pending" {{ $purchaseOrder->status == 'pending' ? 'selected' : '' }}>{{ __('Pending') }}</option>
-                                            <option value="processing" {{ $purchaseOrder->status == 'processing' ? 'selected' : '' }}>{{ __('Processing') }}</option>
-                                            <option value="completed" {{ $purchaseOrder->status == 'completed' ? 'selected' : '' }}>{{ __('Completed') }}</option>
-                                            <option value="parcial_status" {{ $purchaseOrder->status == 'parcial_status' ? 'selected' : '' }}>{{ __('Parcial') }}</option>
-                                            <option value="cancelled" {{ $purchaseOrder->status == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelled') }}</option>
-                                        </select>
-                                    </div>
-                                
+                                <div class="flex items-center">
+                                    <span class="status-indicator {{ $purchaseOrder->status }}"></span>
+                                    <select style="width: 100px" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                                        onchange="handleStatusChange(this, '{{ $purchaseOrder->id }}', '{{ $purchaseOrder->order_consecutive }}', '{{ $purchaseOrder->status }}')">
+                                        <option value="pending" {{ $purchaseOrder->status == 'pending' ? 'selected' : '' }}>{{ __('Pendiente') }}</option>
+                                        <option value="processing" {{ $purchaseOrder->status == 'processing' ? 'selected' : '' }}>{{ __('En Proceso') }}</option>
+                                        <option value="completed" {{ $purchaseOrder->status == 'completed' ? 'selected' : '' }}>{{ __('Completado') }}</option>
+                                        <option value="parcial_status" {{ $purchaseOrder->status == 'parcial_status' ? 'selected' : '' }}>{{ __('Parcial') }}</option>
+                                        <option value="cancelled" {{ $purchaseOrder->status == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelado') }}</option>
+                                    </select>
+                                </div>
                             </td>
                             <td class="icon-btn">
                                 <a class="pt-2" href="{{ route('admin.purchase_orders.show', $purchaseOrder->id) }}">
@@ -169,7 +167,7 @@
                                 <a href="{{ route('admin.purchase_orders.edit', $purchaseOrder->id) }}">
                                     <svg style="color: #e3ba41;" class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z"></path>
-                                        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 -2h9a2 2 0 0 0 2 -2v-3"></path>
+                                        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
                                         <path d="M9 15h3l8.5 -8.5a1.5 1.7 0 0 0 -3 -3l-8.5 8.5v3"></path>
                                         <line x1="16" y1="5" x2="19" y2="8"></line>
                                     </svg>
@@ -196,7 +194,7 @@
                         <tr>
                             <td colspan="7">
                                 <div class="flex flex-col justify-center items-center py-4 text-lg">
-                                    {{ __('No Result Found') }}
+                                    {{ __('No se encontraron resultados') }}
                                 </div>
                             </td>
                         </tr>

@@ -1,9 +1,9 @@
 <form method="GET" action="{{ $action }}">
     <div class="py-2 flex">
         <div class="flex">
-            <input type="search" name="search" value="{{ request()->input('search') }}" class="input input-bordered w-full max-w-xs" placeholder="Search">
+            <input type="search" name="search" value="{{ request()->input('search') }}" class="input input-bordered w-full max-w-xs" placeholder="Buscar">
             <button type='submit' class='btn px-6 ml-3 normal-case btn-primary'>
-                {{ __('Search') }}
+                {{ __('Buscar') }}
             </button>
         </div>
     </div>

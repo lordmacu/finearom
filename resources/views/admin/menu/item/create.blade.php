@@ -1,12 +1,14 @@
 <x-admin.wrapper>
     <x-slot name="title">
-            {{ __('Menu Items') }}
+            {{ __('Elementos del Menú') }}
     </x-slot>
 
     <div>
-        <x-admin.breadcrumb href="{{route('admin.menu.item.index', $menu->id)}}" title="{{ __('Add Menu Item') }}"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <x-admin.breadcrumb href="{{route('admin.menu.item.index', $menu->id)}}" title="{{ __('Agregar Elemento de Menú') }}">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"></path>
-            </svg></x-admin.breadcrumb>
+            </svg>
+        </x-admin.breadcrumb>
         <x-admin.form.errors />
     </div>
     <div class="w-full py-2 overflow-hidden">
@@ -15,51 +17,51 @@
         @csrf
 
             <div class="py-2">
-            <x-admin.form.label for="name" class="{{$errors->has('name') ? 'text-red-400' : ''}}">{{ __('Name') }}</x-admin.form.label>
+                <x-admin.form.label for="name" class="{{$errors->has('name') ? 'text-red-400' : ''}}">{{ __('Nombre') }}</x-admin.form.label>
 
-            <x-admin.form.input id="name" class="{{$errors->has('name') ? 'border-red-400' : ''}}"
-                                type="text"
-                                name="name"
-                                value="{{ old('name') }}"
-                                />
+                <x-admin.form.input id="name" class="{{$errors->has('name') ? 'border-red-400' : ''}}"
+                                    type="text"
+                                    name="name"
+                                    value="{{ old('name') }}"
+                                    />
             </div>
 
             <div class="py-2">
-            <x-admin.form.label for="uri" class="{{$errors->has('uri') ? 'text-red-400' : ''}}">{{ __('Link') }}</x-admin.form.label>
+                <x-admin.form.label for="uri" class="{{$errors->has('uri') ? 'text-red-400' : ''}}">{{ __('Enlace') }}</x-admin.form.label>
 
-            <x-admin.form.input id="uri" class="{{$errors->has('uri') ? 'border-red-400' : ''}}"
-                                type="text"
-                                name="uri"
-                                value="{{ old('uri') }}"
-                                />
+                <x-admin.form.input id="uri" class="{{$errors->has('uri') ? 'border-red-400' : ''}}"
+                                    type="text"
+                                    name="uri"
+                                    value="{{ old('uri') }}"
+                                    />
                 <div class="item-list">
-                        You can also enter an internal path such as <em class="placeholder">/home</em> or an external URL such as <em class="placeholder">http://example.com</em>. 
-                        Add prefix <em class="placeholder">&lt;admin&gt;</em> to link for admin page. Enter <em class="placeholder">&lt;nolink&gt;</em> to display link text only.
+                    También puedes ingresar una ruta interna como <em class="placeholder">/home</em> o una URL externa como <em class="placeholder">http://example.com</em>.
+                    Agrega el prefijo <em class="placeholder">&lt;admin&gt;</em> para un enlace a la página de administrador. Ingresa <em class="placeholder">&lt;nolink&gt;</em> para mostrar solo el texto del enlace.
                 </div>
             </div>
 
             <div class="py-2">
-            <x-admin.form.label for="description" class="{{$errors->has('description') ? 'text-red-400' : ''}}">{{ __('Description') }}</x-admin.form.label>
+                <x-admin.form.label for="description" class="{{$errors->has('description') ? 'text-red-400' : ''}}">{{ __('Descripción') }}</x-admin.form.label>
 
-            <x-admin.form.input id="description" class="{{$errors->has('description') ? 'border-red-400' : ''}}"
-                                type="text"
-                                name="description"
-                                value="{{ old('description') }}"
-                                />
+                <x-admin.form.input id="description" class="{{$errors->has('description') ? 'border-red-400' : ''}}"
+                                    type="text"
+                                    name="description"
+                                    value="{{ old('description') }}"
+                                    />
             </div>
 
             <div class="p-2">
                 <label for="enabled" class="inline-flex items-center">
                     <input id="enabled" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="enabled" value="1" {{ old('enabled', 1) ? 'checked="checked"' : '' }}>
-                    <span class="ml-2">{{ __('Enabled') }}</span>
+                    <span class="ml-2">{{ __('Habilitado') }}</span>
                 </label>
             </div>
 
             <div class="py">
-                <x-admin.form.label for="parent_id" class="{{$errors->has('parent_id') ? 'text-red-400' : ''}}">{{ __('Parent Item') }}</x-admin.form.label>
+                <x-admin.form.label for="parent_id" class="{{$errors->has('parent_id') ? 'text-red-400' : ''}}">{{ __('Elemento Padre') }}</x-admin.form.label>
 
                 <select name="parent_id" class="input input-bordered w-full ">
-                    <option value=''>-ROOT-</option>
+                    <option value=''>-RAÍZ-</option>
                     @foreach ($item_options as $key => $name)
                     <option value="{{ $key }}" @selected(old('parent_id') == $key)>
                         {!! $name !!}
@@ -68,24 +70,24 @@
                 </select>
 
                 <div>
-                    The maximum depth for a link and all its children is fixed. Some menu links may not be available as parents if selecting them would exceed this limit.
+                    La profundidad máxima para un enlace y todos sus hijos está fija. Algunos enlaces de menú pueden no estar disponibles como padres si seleccionarlos excedería este límite.
                 </div>
             </div>
 
             <div class="py-2 w-40">
-            <x-admin.form.label for="weight" class="{{$errors->has('weight') ? 'text-red-400' : ''}}">{{ __('Weight') }}</x-admin.form.label>
+                <x-admin.form.label for="weight" class="{{$errors->has('weight') ? 'text-red-400' : ''}}">{{ __('Peso') }}</x-admin.form.label>
 
-            <x-admin.form.input id="weight" class="{{$errors->has('weight') ? 'border-red-400' : ''}}"
-                                type="number"
-                                name="weight"
-                                value="{{ old('weight', 0) }}"
-                                />
+                <x-admin.form.input id="weight" class="{{$errors->has('weight') ? 'border-red-400' : ''}}"
+                                    type="number"
+                                    name="weight"
+                                    value="{{ old('weight', 0) }}"
+                                    />
             </div>
 
             <div class="py-2">
-            <x-admin.form.label for="icon" class="{{$errors->has('icon') ? 'text-red-400' : ''}}">{{ __('Icon') }}</x-admin.form.label>
+                <x-admin.form.label for="icon" class="{{$errors->has('icon') ? 'text-red-400' : ''}}">{{ __('Icono') }}</x-admin.form.label>
 
-            <textarea name="icon" id="icon" class="{{$errors->has('icon') ? 'border-red-400' : ''}} textarea input-bordered w-full">{{ old('icon') }}</textarea>
+                <textarea name="icon" id="icon" class="{{$errors->has('icon') ? 'border-red-400' : ''}} textarea input-bordered w-full">{{ old('icon') }}</textarea>
             </div>
             
             <div class="py-2">
@@ -105,7 +107,7 @@
             </div>
             
             <div class="flex justify-end mt-4">
-                <x-admin.form.button>{{ __('Create') }}</x-admin.form.button>
+                <x-admin.form.button>{{ __('Crear') }}</x-admin.form.button>
             </div>
         </form>
     </div>
