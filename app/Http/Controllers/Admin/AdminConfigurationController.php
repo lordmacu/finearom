@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ProductImport;
 use App\Models\BranchOffice;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Models\Process;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PurchaseOrderImport;
+use Illuminate\Support\Facades\Storage;
 
 class AdminConfigurationController extends Controller
 {
@@ -57,5 +60,36 @@ class AdminConfigurationController extends Controller
         return response()->json(['success' => true]);
     }
     
+
+    public function uploadConfig(Request $request)
+    {
+ // Crear una instancia del importador
+ $importer = new ProductImport();
+
+ // Ejecutar la importación
+ Excel::import($importer, $request->file('file'));
+
+ // Obtener los errores después de la importación
+ $errors = $importer->getErrors();
+
+ // Si hay errores, generar un CSV
+ if (!empty($errors)) {
+     // Nombre del archivo CSV
+     $filename = 'import_errors_' . date('Ymd_His') . '.csv';
+
+     // Crear el archivo CSV
+     $csvContent = "product,nit_cod,nit,error\n";
+
+     foreach ($errors as $error) {
+         $csvContent .= trim($error['product']) . "," . trim($error['nit_cod'])  . "," . trim($error['nit']) . "," . trim($error['error']). "\n";
+     } 
+
+     echo $csvContent;
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Import completed successfully.',
+    ]);
+    }
     
+}
 }

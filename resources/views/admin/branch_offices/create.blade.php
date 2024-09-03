@@ -34,25 +34,6 @@
                 </div>
 
 
- 
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <x-admin.form.label for="contact"
-                            class="{{ $errors->has('contact') ? 'text-red-400' : '' }}">{{ __('Contacto') }}</x-admin.form.label>
-                        <x-admin.form.input id="contact" class="{{ $errors->has('contact') ? 'border-red-400' : '' }}"
-                            type="text" name="contact" value="{{ old('contact') }}" />
-                    </div>
-                    <div class="w-1/2">
-                        <x-admin.form.label for="billing_contact"
-                            class="{{ $errors->has('billing_contact') ? 'text-red-400' : '' }}">{{ __('Contacto Cartera') }}</x-admin.form.label>
-                        <x-admin.form.input id="billing_contact"
-                            class="{{ $errors->has('billing_contact') ? 'border-red-400' : '' }}" type="text"
-                            name="billing_contact" value="{{ old('billing_contact') }}" />
-                    </div>
-                </div>
-
-
-
                 <div class="flex gap-4">
                     <div class="w-1/2">
 
@@ -70,45 +51,6 @@
                             name="delivery_city" value="{{ old('delivery_city') }}" />
                     </div>
                 </div>
-
-
-
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <x-admin.form.label for="billing_address"
-                            class="{{ $errors->has('billing_address') ? 'text-red-400' : '' }}">{{ __('Dirección de Radicación') }}</x-admin.form.label>
-                        <x-admin.form.input id="billing_address"
-                            class="{{ $errors->has('billing_address') ? 'border-red-400' : '' }}" type="text"
-                            name="billing_address" value="{{ old('billing_address') }}" />
-                    </div>
-                    <div class="w-1/2">
-                        <x-admin.form.label for="billing_city"
-                            class="{{ $errors->has('billing_city') ? 'text-red-400' : '' }}">{{ __('Ciudad de Radicación') }}</x-admin.form.label>
-                        <x-admin.form.input id="billing_city"
-                            class="{{ $errors->has('billing_city') ? 'border-red-400' : '' }}" type="text"
-                            name="billing_city" value="{{ old('billing_city') }}" />
-                    </div>
-                </div>
-
-
-
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <x-admin.form.label for="phone"
-                            class="{{ $errors->has('phone') ? 'text-red-400' : '' }}">{{ __('Teléfono') }}</x-admin.form.label>
-                        <x-admin.form.input id="phone" class="{{ $errors->has('phone') ? 'border-red-400' : '' }}"
-                            type="text" name="phone" value="{{ old('phone') }}" />
-                    </div>
-                    <div class="w-1/2">
-                        <x-admin.form.label for="shipping_observations"
-                            class="{{ $errors->has('shipping_observations') ? 'text-red-400' : '' }}">{{ __('Observaciones de Envío') }}</x-admin.form.label>
-                        <x-admin.form.input id="shipping_observations"
-                            class="{{ $errors->has('shipping_observations') ? 'border-red-400' : '' }}" type="text"
-                            name="shipping_observations" value="{{ old('shipping_observations') }}" />
-                    </div>
-                </div>
-
-
 
                 <div class="py-2">
                     <x-admin.form.label for="general_observations"

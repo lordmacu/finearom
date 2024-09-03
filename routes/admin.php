@@ -9,6 +9,9 @@ Route::group([
 
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    Route::post('/config/upload', 'AdminConfigurationController@uploadConfig')->name('config.upload');
+
+
     Route::resource('user', 'UserController');
     Route::resource('role', 'RoleController');
     Route::resource('permission', 'PermissionController');
@@ -55,6 +58,7 @@ Route::group([
     Route::put('client/{clientId}/branch_offices/{id}', [App\Http\Controllers\Admin\BranchOfficeController::class, 'update'])->name('branch_offices.update');
     Route::delete('client/{clientId}/branch_offices/{id}', [App\Http\Controllers\Admin\BranchOfficeController::class, 'destroy'])->name('branch_offices.destroy');
 
+    Route::get('products/export', [App\Http\Controllers\Admin\ProductController::class, 'exportExcel'])->name('product_export');
 
     Route::get('config', [App\Http\Controllers\Admin\AdminConfigurationController::class, 'index'])->name('config.index');
     Route::post('config', [App\Http\Controllers\Admin\AdminConfigurationController::class, 'store'])->name('config.store');

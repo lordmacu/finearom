@@ -10,15 +10,9 @@ class BranchOffice extends Model
         'name',
         'nit',
         'client_id',
-        'headquarters',
-        'contact',
-        'billing_contact',
-        'delivery_address',
         'delivery_city',
         'billing_address',
-        'billing_city',
-        'phone',
-        'shipping_observations',
+        'delivery_address',
         'general_observations',
     ];
 

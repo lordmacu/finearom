@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Process;
 use Symfony\Component\Mime\Address;
 
+use Illuminate\Support\Facades\Cache;
 
 
 class PurchaseOrderController extends Controller
@@ -214,13 +215,13 @@ class PurchaseOrderController extends Controller
             }
 
             $purchaseOrderData['order_creation_date'] = $currentDate;
-            
-            if( $request->get('trm_initial') != $request->get('trm')){
+
+            if ($request->get('trm_initial') != $request->get('trm')) {
                 $purchaseOrderData['trm_updated_at'] = $currentDate;
             }
 
             $purchaseOrder = PurchaseOrder::create($purchaseOrderData);
-            $purchaseOrder->order_consecutive = $purchaseOrder->id.'-'.$purchaseOrder->order_consecutive;
+            $purchaseOrder->order_consecutive = $purchaseOrder->id . '-' . $purchaseOrder->order_consecutive;
             $purchaseOrder->save();
             foreach ($request->products as $product) {
                 $purchaseOrder->products()->attach($product['product_id'], [
@@ -239,11 +240,11 @@ class PurchaseOrderController extends Controller
                 ->pluck('email')
                 ->toArray();
 
-            Mail::to($purchaseOrder->client->email)
+            Mail::to(explode(',', $purchaseOrder->client->email))
                 ->cc($ccEmails)
                 ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));
 
-            Mail::to($purchaseOrder->client->email)
+            Mail::to(explode(',', $purchaseOrder->client->email))
                 ->cc($ccEmails)
                 ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));
 
@@ -298,8 +299,7 @@ class PurchaseOrderController extends Controller
             $purchaseOrder->tracking_number = $request->input('tracking_number');
             $purchaseOrder->observations_extra = $request->input('observations');
             $this->sendStatusChangedEmailsCompleteAndPartial($purchaseOrder);
-
-        }else{
+        } else {
             $this->sendStatusChangedEmails($purchaseOrder, $oldStatus);
         }
 
@@ -350,15 +350,15 @@ class PurchaseOrderController extends Controller
         $transport = Transport::fromDsn(env('MAILER_DSN'));
         $mailer = new Mailer($transport);
         $fromEmail = env('MAIL_USERNAME');
-        
+
         $ccEmails = Process::where('process_type', 'pedido')
             ->pluck('email')
             ->toArray();
-            $clientEmail = $purchaseOrder->client->email;
-            $ccEmailsString = implode(',', $ccEmails);
+        $clientEmail = $purchaseOrder->client->email;
+        $ccEmailsString = implode(',', $ccEmails);
 
         $email = (new Email())
-            ->from( $fromEmail)
+            ->from($fromEmail)
             ->cc($ccEmailsString)
             ->to($clientEmail)
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
@@ -404,7 +404,7 @@ class PurchaseOrderController extends Controller
                 'contact' => $request->contact,
                 'phone' => $request->phone,
                 'observations' => $request->observations,
-                'status' => $request->status, 
+                'status' => $request->status,
             ]);
 
             // Handle the attachment file
@@ -458,10 +458,16 @@ class PurchaseOrderController extends Controller
 
     public function getClientProducts($clientId)
     {
-        $products = Product::where('client_id', $clientId)->get();
+        // Definir un key único para la cache basada en el ID del cliente
+        $cacheKey = "client_products_{$clientId}";
+
+        // Cachear la respuesta indefinidamente
+        $products = Cache::rememberForever($cacheKey, function () use ($clientId) {
+            return Product::where('client_id', $clientId)->get();
+        });
+
         return response()->json($products);
     }
-
     public function show(PurchaseOrder $purchaseOrder)
     {
         $exchange = $this->getExchangeRate();

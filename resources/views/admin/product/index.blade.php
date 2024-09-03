@@ -9,6 +9,9 @@
         </x-admin.add-link>
     @endcan
 
+    <a href="/admin/products/export" class="btn btn-success">Export to Excel</a>
+
+
     <div class="py-2">
         <form method="GET" action="{{ route('admin.product.index') }}">
             <div class="flex items-center space-x-2">

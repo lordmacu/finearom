@@ -22,6 +22,34 @@
                     <x-admin.form.input id="client_name" class="{{ $errors->has('client_name') ? 'border-red-400' : '' }}" type="text" name="client_name" value="{{ old('client_name', $client->client_name) }}" />
                 </div>
             </div>
+            <div class="py-2">
+                <x-admin.form.label for="nit" class="{{ $errors->has('nit') ? 'text-red-400' : '' }}">{{ __('Nit') }}</x-admin.form.label>
+                <x-admin.form.input id="nit" class="{{ $errors->has('nit') ? 'border-red-400' : '' }}" type="text" name="nit" value="{{ old('nit', $client->nit) }}" />
+            </div>
+            
+            <div class="py-2">
+                <x-admin.form.label for="shipping_notes" class="{{ $errors->has('shipping_notes') ? 'text-red-400' : '' }}">{{ __('Notas de envio') }}</x-admin.form.label>
+                <x-admin.form.input id="shipping_notes" class="{{ $errors->has('shipping_notes') ? 'border-red-400' : '' }}" type="text" name="shipping_notes" value="{{ old('shipping_notes', $client->shipping_notes) }}" />
+            </div>
+
+            <div class="py-2">
+                <x-admin.form.label for="executive" class="{{ $errors->has('executive') ? 'text-red-400' : '' }}">{{ __('Ejecutivo') }}</x-admin.form.label>
+                <x-admin.form.input id="executive" class="{{ $errors->has('executive') ? 'border-red-400' : '' }}" type="text" name="executive" value="{{ old('executive', $client->executive) }}" />
+            </div>
+            
+            <div class="py-2">
+                <x-admin.form.label for="address" class="{{ $errors->has('address') ? 'text-red-400' : '' }}">{{ __('Direccion') }}</x-admin.form.label>
+                <x-admin.form.input id="address" class="{{ $errors->has('address') ? 'border-red-400' : '' }}" type="text" name="address" value="{{ old('address', $client->address) }}" />
+            </div>
+            <div class="py-2">
+                <x-admin.form.label for="phone" class="{{ $errors->has('phone') ? 'text-red-400' : '' }}">{{ __('Telefono') }}</x-admin.form.label>
+                <x-admin.form.input id="phone" class="{{ $errors->has('phone') ? 'border-red-400' : '' }}" type="text" name="phone" value="{{ old('phone', $client->phone) }}" />
+            </div>
+
+            <div class="py-2">
+                <x-admin.form.label for="commercial_conditions" class="{{ $errors->has('commercial_conditions') ? 'text-red-400' : '' }}">{{ __('Condiciones comerciales') }}</x-admin.form.label>
+                <x-admin.form.input id="commercial_conditions" class="{{ $errors->has('commercial_conditions') ? 'border-red-400' : '' }}" type="text" name="commercial_conditions" value="{{ old('commercial_conditions', $client->commercial_conditions) }}" />
+            </div>
 
             <div class="py-2 grid grid-cols-2 gap-4">
                 <div>
@@ -33,22 +61,54 @@
                 </div>
             </div>
 
-            <div class="py-2">
-                <x-admin.form.label for="email" class="{{ $errors->has('email') ? 'text-red-400' : '' }}">{{ __('Correo Electrónico') }}</x-admin.form.label>
-                <x-admin.form.input id="email" class="{{ $errors->has('email') ? 'border-red-400' : '' }}" type="email" name="email" value="{{ old('email', $client->email) }}" />
+            <div class="py-2 grid grid-cols-2 gap-4">
+                <div class="py-2">
+                    <x-admin.form.label for="email" class="{{ $errors->has('email') ? 'text-red-400' : '' }}">{{ __('Correo Electrónico') }}</x-admin.form.label>
+                    <x-admin.form.input id="email" class="{{ $errors->has('email') ? 'border-red-400' : '' }}" type="email" name="email" value="{{ old('email', $client->email) }}" />
+                </div>
+                <div class="py-2">
+                    <x-admin.form.label for="executive_email" class="{{ $errors->has('executive_email') ? 'text-red-400' : '' }}">{{ __('Correo de la Ejecutiva') }}</x-admin.form.label>
+                    <x-admin.form.input id="executive_email" class="{{ $errors->has('executive_email') ? 'border-red-400' : '' }}" type="email" name="executive_email" value="{{ old('executive_email', $client->executive_email) }}" />
+                </div>
             </div>
 
             <div class="py-2 grid grid-cols-2 gap-4">
                 <div>
-                    <x-admin.form.label for="executive" class="{{ $errors->has('executive') ? 'text-red-400' : '' }}">{{ __('Ejecutiva') }}</x-admin.form.label>
-                    <x-admin.form.input id="executive" class="{{ $errors->has('executive') ? 'border-red-400' : '' }}" type="text" name="executive" value="{{ old('executive', $client->executive) }}" />
+                    <x-admin.form.label for="dispatch_confirmation_contact" class="{{ $errors->has('dispatch_confirmation_contact') ? 'text-red-400' : '' }}">{{ __('Contacto Confirmación Despacho') }}</x-admin.form.label>
+                    <x-admin.form.input id="dispatch_confirmation_contact" class="{{ $errors->has('dispatch_confirmation_contact') ? 'border-red-400' : '' }}" type="text" name="dispatch_confirmation_contact" value="{{ old('dispatch_confirmation_contact', $client->dispatch_confirmation_contact) }}" />
                 </div>
                 <div>
-                    <x-admin.form.label for="billing_closure" class="{{ $errors->has('billing_closure') ? 'text-red-400' : '' }}">{{ __('Cierre de Facturación') }}</x-admin.form.label>
-                    <x-admin.form.input id="billing_closure" class="{{ $errors->has('billing_closure') ? 'border-red-400' : '' }}" type="text" name="billing_closure" value="{{ old('billing_closure', $client->billing_closure) }}" />
+                    <x-admin.form.label for="accounting_contact" class="{{ $errors->has('accounting_contact') ? 'text-red-400' : '' }}">{{ __('Contacto Contabilidad') }}</x-admin.form.label>
+                    <x-admin.form.input id="accounting_contact" class="{{ $errors->has('accounting_contact') ? 'border-red-400' : '' }}" type="text" name="accounting_contact" value="{{ old('accounting_contact', $client->accounting_contact) }}" />
                 </div>
             </div>
 
+            <div class="py-2 grid grid-cols-2 gap-4">
+                <div class="py-2">
+                    <x-admin.form.label for="dispatch_confirmation_email" class="{{ $errors->has('dispatch_confirmation_email') ? 'text-red-400' : '' }}">{{ __('Correo Confirmación Despacho') }}</x-admin.form.label>
+                    <x-admin.form.input id="dispatch_confirmation_email" class="{{ $errors->has('dispatch_confirmation_email') ? 'border-red-400' : '' }}" type="email" name="dispatch_confirmation_email" value="{{ old('dispatch_confirmation_email', $client->dispatch_confirmation_email) }}" />
+                </div>
+                <div class="py-2">
+                    <x-admin.form.label for="accounting_contact_email" class="{{ $errors->has('accounting_contact_email') ? 'text-red-400' : '' }}">{{ __('Correo Contacto Contabilidad') }}</x-admin.form.label>
+                    <x-admin.form.input id="accounting_contact_email" class="{{ $errors->has('accounting_contact_email') ? 'border-red-400' : '' }}" type="email" name="accounting_contact_email" value="{{ old('accounting_contact_email', $client->accounting_contact_email) }}" />
+                </div>
+            </div>
+
+            <div class="py-2 grid grid-cols-2 gap-4">
+                <div>
+                    <x-admin.form.label for="registration_address" class="{{ $errors->has('registration_address') ? 'text-red-400' : '' }}">{{ __('Dirección de Radicación') }}</x-admin.form.label>
+                    <x-admin.form.input id="registration_address" class="{{ $errors->has('registration_address') ? 'border-red-400' : '' }}" type="text" name="registration_address" value="{{ old('registration_address', $client->registration_address) }}" />
+                </div>
+                <div>
+                    <x-admin.form.label for="registration_city" class="{{ $errors->has('registration_city') ? 'text-red-400' : '' }}">{{ __('Ciudad de Radicación') }}</x-admin.form.label>
+                    <x-admin.form.input id="registration_city" class="{{ $errors->has('registration_city') ? 'border-red-400' : '' }}" type="text" name="registration_city" value="{{ old('registration_city', $client->registration_city) }}" />
+                </div>
+            </div>
+
+            <div class="py-2">
+                <x-admin.form.label for="billing_closure" class="{{ $errors->has('billing_closure') ? 'text-red-400' : '' }}">{{ __('Cierre de Facturación') }}</x-admin.form.label>
+                <x-admin.form.input id="billing_closure" class="{{ $errors->has('billing_closure') ? 'border-red-400' : '' }}" type="text" name="billing_closure" value="{{ old('billing_closure', $client->billing_closure) }}" />
+            </div>
 
             <div class="py-2 grid grid-cols-2 gap-4">
                 <div>
@@ -81,10 +141,14 @@
                 </div>
             </div>
 
-            
             <div class="py-2">
-                <x-admin.form.label for="commercial_conditions" class="{{ $errors->has('commercial_conditions') ? 'text-red-400' : '' }}">{{ __('Condiciones Comerciales') }}</x-admin.form.label>
-                <textarea id="commercial_conditions" name="commercial_conditions" class="input input-bordered w-full {{ $errors->has('commercial_conditions') ? 'border-red-400' : '' }}">{{ old('commercial_conditions', $client->commercial_conditions) }}</textarea>
+                <x-admin.form.label for="commercial_terms" class="{{ $errors->has('commercial_terms') ? 'text-red-400' : '' }}">{{ __('Condiciones Comerciales') }}</x-admin.form.label>
+                <textarea id="commercial_terms" name="commercial_terms" class="input input-bordered w-full {{ $errors->has('commercial_terms') ? 'border-red-400' : '' }}">{{ old('commercial_terms', $client->commercial_terms) }}</textarea>
+            </div>
+
+            <div class="py-2">
+                <x-admin.form.label for="trm" class="{{ $errors->has('trm') ? 'text-red-400' : '' }}">{{ __('TRM') }}</x-admin.form.label>
+                <x-admin.form.input id="trm" class="{{ $errors->has('trm') ? 'border-red-400' : '' }}" type="text" name="trm" value="{{ old('trm', $client->trm) }}" />
             </div>
 
             <div class="flex justify-between mt-4">

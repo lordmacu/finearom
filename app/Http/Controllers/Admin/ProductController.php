@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
+use App\Exports\ProductsExport;
+use Maatwebsite\Excel\Facades\Excel;
 class ProductController extends Controller
 {
     public function __construct()
@@ -74,6 +76,9 @@ class ProductController extends Controller
             'client_id' => $request->client_id,
         ]);
 
+        $cacheKey = "client_products_{$request->client_id}";
+        Cache::forget($cacheKey);
+
         return redirect()->route('admin.product.index')
                          ->with('message', 'Product created successfully.');
     }
@@ -82,6 +87,11 @@ class ProductController extends Controller
     {
         $clients = Client::all();
         return view('admin.product.edit', compact('product', 'clients'));
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
 
     public function update(Request $request, Product $product)
@@ -94,6 +104,10 @@ class ProductController extends Controller
         ]);
 
         $product->update($request->all());
+
+        $cacheKey = "client_products_{$request->client_id}";
+        Cache::forget($cacheKey);
+
 
         return redirect()->route('admin.product.index')
                          ->with('message', 'Product updated successfully.');

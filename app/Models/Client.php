@@ -12,15 +12,28 @@ class Client extends Model
         'payment_type',
         'email',
         'executive',
-        'address',
-        'city',
+        'executive_email',          // Agregado
+        'address',                  // Debe coincidir con 'delivery_address'
+        'city',                     // Debe coincidir con 'delivery_city'
         'billing_closure',
-        'commercial_conditions',
+        'commercial_terms',         // Cambiado de 'commercial_conditions' para coincidir con la inserción
         'proforma_invoice',
         'payment_method',
         'payment_day',
         'status',
+        'dispatch_confirmation_contact',
+        'accounting_contact',
+        'accounting_contact_email',
+        'dispatch_confirmation_email',
+        'registration_address',
+        'registration_city',
+        'phone',
+        'shipping_notes',
+        'user_id',                // Agregado para coincidir con la inserción
+        'trm',                      // Agregado para coincidir con la inserción
+        'commercial_conditions'
     ];
+    
 
     public function observation()
     {
