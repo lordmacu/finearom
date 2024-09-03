@@ -7,6 +7,9 @@ use App\Models\BranchOffice;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
+use App\Exports\BranchOfficesExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class BranchOfficeController extends Controller
 {
     public function index($clientId)
@@ -14,6 +17,12 @@ class BranchOfficeController extends Controller
         $client = Client::findOrFail($clientId);
         $branchOffices = BranchOffice::where('client_id', $clientId)->get();
         return view('admin.branch_offices.index', compact('client', 'branchOffices'));
+    }
+
+
+    public function exportExcel()
+    {
+        return Excel::download(new BranchOfficesExport, 'branch_offices.xlsx');
     }
 
     public function create($clientId)
