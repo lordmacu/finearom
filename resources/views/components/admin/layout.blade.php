@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
-        @vite(['resources/css/admin/app.css', 'resources/js/admin/app.js'])
+        @vite([ 'resources/js/admin/app.js'])
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
