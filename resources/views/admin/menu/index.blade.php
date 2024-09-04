@@ -5,7 +5,7 @@
 
     @can('menu create')
     <x-admin.add-link href="{{ route('admin.menu.create') }}">
-        {{ __('Add Menu') }}
+        {{ __('Agregar Menu') }}
     </x-admin.add-link>
     @endcan
 

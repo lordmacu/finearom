@@ -5,7 +5,7 @@
 
     @can('role create')
     <x-admin.add-link href="{{ route('admin.role.create') }}">
-        {{ __('Add Role') }}
+        {{ __('Agregar Rol') }}
     </x-admin.add-link>
     @endcan
 
@@ -16,11 +16,11 @@
                 <x-slot name="head">
                     <tr class="bg-base-200">
                         <x-admin.grid.th>
-                            @include('admin.includes.sort-link', ['label' => 'Name', 'attribute' => 'name'])
+                            @include('admin.includes.sort-link', ['label' => 'Nombre', 'attribute' => 'name'])
                         </x-admin.grid.th>
                         @canany(['role edit', 'role delete'])
                         <x-admin.grid.th>
-                            {{ __('Actions') }}
+                            {{ __('Acciones') }}
                         </x-admin.grid.th>
                         @endcanany
                     </tr>
@@ -51,7 +51,7 @@
                                     @can('role delete')
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-square btn-ghost" onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">
+                                    <button class="btn btn-square btn-ghost" onclick="return confirm('{{ __('¿Estás seguro de que deseas eliminar?') }}')">
                                         <svg style="
                                                             width: 24px;
                                                             margin-top: 3px;
@@ -72,7 +72,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="flex flex-col justify-center items-center py-4 text-lg">
-                                    {{ __('No Result Found') }}
+                                    {{ __('No se encontraron resultados') }}
                                 </div>
                             </td>
                         </tr>

@@ -1,23 +1,25 @@
 <x-admin.wrapper>
     <x-slot name="title">
-        {{ __('Menus') }}
+        {{ __('Menús') }}
     </x-slot>
     
     <div class="d-print-none with-border">
-        <x-admin.breadcrumb href="{{route('admin.menu.index')}}" title="{{ __('Menu Items') }}"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-</svg></x-admin.breadcrumb> 
+        <x-admin.breadcrumb href="{{route('admin.menu.index')}}" title="{{ __('Elementos del Menú') }}">
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+            </svg>
+        </x-admin.breadcrumb> 
     </div>
     <div class="w-full py-2">
         <div class="min-w-full border-base-200 shadow relative overflow-x-auto">
             <table class="table">
                 <tbody>
                     <tr>
-                        <td>{{ __('Name') }}</td>
+                        <td>{{ __('Nombre') }}</td>
                         <td>{{$menu->name}}</td>
                     </tr>
                     <tr>
-                        <td>{{ __('Machine name') }}</td>
+                        <td>{{ __('Nombre de Máquina') }}</td>
                         <td>{{$menu->machine_name}}</td>
                     </tr>
                 </tbody>
@@ -27,24 +29,24 @@
 
     @can('menu create')
     <x-admin.add-link href="{{ route('admin.menu.item.create', $menu->id) }}">
-        {{ __('Add Menu Item') }}
+        {{ __('Agregar Elemento de Menú') }}
     </x-admin.add-link>
     @endcan
     
     <div class="py-2">
-        <div class="min-w-full  border-base-200 shadow overflow-x-auto">
+        <div class="min-w-full border-base-200 shadow overflow-x-auto">
             <x-admin.grid.table>
                 <x-slot name="head">
                     <tr class="bg-base-200">
                         <x-admin.grid.th>
-                        {{ __('Name') }}
+                            {{ __('Nombre') }}
                         </x-admin.grid.th>
                         <x-admin.grid.th>
-                            {{ __('Enabled') }}
+                            {{ __('Habilitado') }}
                         </x-admin.grid.th>
                         @canany(['menu.item edit', 'menu.item delete'])
                         <x-admin.grid.th>
-                            {{ __('Actions') }}
+                            {{ __('Acciones') }}
                         </x-admin.grid.th>
                         @endcanany
                     </tr>
@@ -57,7 +59,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="flex flex-col justify-center items-center py-4 text-lg">
-                                    {{ __('No Result Found') }}
+                                    {{ __('No se encontraron resultados') }}
                                 </div>
                             </td>
                         </tr>
