@@ -18,10 +18,34 @@ class DashboardController extends Controller
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
         $query = PurchaseOrder::query();
-
+        
         // Check for filter input
         $filterType = request('filter_type');
         $sortDirection = request('sort_direction', 'desc'); // Default to descending
+        
+        $creationDate = request('creation_date');
+        
+        // Inicializamos las fechas por defecto (todo el mes)
+        $fromDate = $startOfMonth;
+        $toDate = $endOfMonth;
+        
+        if ($creationDate) {
+            // Separar las fechas "from" y "to"
+            [$from, $to] = explode(' - ', $creationDate);
+        
+            // Crear instancias de Carbon para ambas fechas
+            $fromDate = Carbon::createFromFormat('Y-m-d', $from)->startOfDay(); // Desde el inicio del día
+            $toDate = Carbon::createFromFormat('Y-m-d', $to)->endOfDay(); // Hasta el final del día
+        
+            // Si la fecha "from" y "to" son iguales, ajusta el tiempo en "from" y "to"
+            if ($fromDate->equalTo($toDate)) {
+                $fromDate = $fromDate->startOfDay(); // Comienza al inicio del día
+                $toDate = $toDate->endOfDay(); // Termina al final del mismo día
+            }
+            $query->whereBetween('order_creation_date', [$fromDate, $toDate]);
+        }
+        
+        
 
         if ($filterType === 'date') {
 
@@ -31,10 +55,9 @@ class DashboardController extends Controller
                   ->orderBy('total_price', $sortDirection);
         }
 
-        // Fetch all purchase orders for the current month with eager loading of products and client
-        $allOrders = $query->whereBetween('order_creation_date', [$startOfMonth, $endOfMonth])
-            ->with('products', 'client')
-            ->get();
+        $allOrders = $query
+        ->with('products', 'client')
+        ->get();
 
         // Separate the orders by status
         $completedOrders = $allOrders->where('status', 'completed');

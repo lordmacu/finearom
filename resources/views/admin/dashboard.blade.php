@@ -16,8 +16,10 @@
                 @php
                 $startOfMonth = \Carbon\Carbon::now()->startOfMonth()->format('Y-m-d');
                 $endOfMonth = \Carbon\Carbon::now()->endOfMonth()->format('Y-m-d');
-                $dateRange = $startOfMonth . ' - ' . $endOfMonth;
+                $creationDate = request('creation_date'); // Obtener el valor de creation_date
+                $dateRange = $creationDate ?? ($startOfMonth . ' - ' . $endOfMonth); // Si existe creation_date, usarlo, si no usar inicio y fin del mes
             @endphp
+            
             
             <a href="{{ url('/admin/purchase_orders?creation_date=' . $dateRange) }}" class="block bg-blue-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-blue-300">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Todas las Ordenes del Mes</h3>
@@ -77,19 +79,31 @@
 
             <div class="mb-4">
                 <form method="GET" action="{{ url('/admin') }}">
-                    <select name="filter_type" id="filter_type" onchange="this.form.submit()">
-                        <option value="" disabled selected>Filtrar por</option>
-                        <option value="date" {{ request('filter_type') == 'date' ? 'selected' : '' }}>Fecha</option>
-                        <option value="total" {{ request('filter_type') == 'total' ? 'selected' : '' }}>Total</option>
-                    </select>
-
-                    <select name="sort_direction" id="sort_direction" onchange="this.form.submit()">
-                        <option value="desc" {{ request('sort_direction') == 'desc' ? 'selected' : '' }}>Descendente</option>
-                        <option value="asc" {{ request('sort_direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
-                    </select>
+                    <div class="grid grid-cols-3 gap-4">
+                        <!-- Filtro por tipo -->
+                        <select name="filter_type" id="filter_type" onchange="this.form.submit()" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="" disabled selected>Filtrar por</option>
+                            <option value="date" {{ request('filter_type') == 'date' ? 'selected' : '' }}>Fecha</option>
+                            <option value="total" {{ request('filter_type') == 'total' ? 'selected' : '' }}>Total</option>
+                        </select>
+            
+                        <!-- Dirección de orden -->
+                        <select name="sort_direction" id="sort_direction" onchange="this.form.submit()" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="desc" {{ request('sort_direction') == 'desc' ? 'selected' : '' }}>Descendente</option>
+                            <option value="asc" {{ request('sort_direction') == 'asc' ? 'selected' : '' }}>Ascendente</option>
+                        </select>
+            
+                        <!-- Campo de fecha y botón de filtrar -->
+                        <div class="flex items-center">
+                            <input type="text" id="creation_date" name="creation_date" value="{{ request('creation_date') }}" class="daterangepicker mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <button type="submit" class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Filtrar por fecha
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
-
+            
             <!-- Latest Orders Section -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Últimas Ordenes Creadas</h3>
@@ -145,6 +159,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+    $(function() {
+        document.querySelectorAll('.daterangepicker').forEach(element => {
+            const picker = new easepick.create({
+                element: element,
+                css: [
+                    'https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css',
+                ],
+                zIndex: 10,
+                plugins: ['RangePlugin'],
+                lang: 'es-Es',
+                autoApply: false,
+                RangePlugin: {
+                    tooltipNumber(num) {
+                        return num - 1;
+                    },
+                    locale: {
+                        one: 'día',
+                        other: 'días',
+                    },
+                },
+            });
+
+            const ampPlugin = picker.PluginManager.addInstance('AmpPlugin');
+            ampPlugin.options.resetButton = true;
+        });
+    });
+</script>
 </x-admin.layout>
 
 
