@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+      //  'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check_permission' => \App\Http\Middleware\CheckPermissions::class,
 
     ];
