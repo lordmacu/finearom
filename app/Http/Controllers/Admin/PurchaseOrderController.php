@@ -232,20 +232,31 @@ class PurchaseOrderController extends Controller
 
             $pdfContent = $this->generatePdfOrder($purchaseOrder);
 
+
+            $clientEmail= $purchaseOrder->client->email;
+
+            $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
+
+
+            $executiveEmail = $purchaseOrder->client->executive_email;
+            $coordinator = 'monica.castano@finearom.com';
+
             $ccEmails = Process::where('process_type', 'pedido')
                 ->pluck('email')
                 ->toArray();
+            $ccEmails = array_merge(explode(',', $ccEmails), [$executiveEmail,$coordinator]);
+
+            Mail::to(explode(',', $clientEmail))
+               //demo ->cc($ccEmails)
+                ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));
 
             $ccEmails = Process::where('process_type', 'orden_de_compra')
                 ->pluck('email')
                 ->toArray();
+            $ccEmails = array_merge(explode(',', $ccEmails), [$executiveEmail, $coordinator]);
 
-            Mail::to(explode(',', $purchaseOrder->client->email))
-                ->cc($ccEmails)
-                ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));
-
-            Mail::to(explode(',', $purchaseOrder->client->email))
-                ->cc($ccEmails)
+            Mail::to(explode(',', $clientEmail))
+             //demo   ->cc($ccEmails)
                 ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));
 
             return response()->json([
@@ -312,6 +323,7 @@ class PurchaseOrderController extends Controller
     public function sendStatusChangedEmailsCompleteAndPartial(PurchaseOrder $purchaseOrder)
     {
         $clientEmail = $purchaseOrder->client->email;
+        $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
 
         // Recuperar el `message_id` desde el storage
         $messageId = $purchaseOrder->message_id;
@@ -322,14 +334,19 @@ class PurchaseOrderController extends Controller
         $ccEmails = Process::where('process_type', 'pedido')
             ->pluck('email')
             ->toArray();
-        $subject = 'Re: Orden de Compra - CONFIRMACIÓN DE DESPACHO PEDIDO - ' . $purchaseOrder->client->name . ' ' . $purchaseOrder->client->identification_number . ' OC Y - ' . $purchaseOrder->order_consecutive;
+
         $ccEmailsString = implode(',', $ccEmails);
-        $fromEmail = env('MAIL_USERNAME');
+
+        $fromEmail = env('MAIL_USERNAME_FACTURACION');
+
+        $executiveEmail = $purchaseOrder->client->executive_email;
+
+        $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
 
         $email = (new Email())
             ->from($fromEmail)
             ->to($clientEmail)
-            ->cc($ccEmailsString)
+        //    ->cc($ccEmailsString)
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_email_complete_partial', ['purchaseOrder' => $purchaseOrder])->render());
 
@@ -344,22 +361,28 @@ class PurchaseOrderController extends Controller
 
     public function sendStatusChangedEmails(PurchaseOrder $purchaseOrder)
     {
-        // Recuperar el `message_id` desde el storage
+
         $messageId = $purchaseOrder->message_id;
+
 
         $transport = Transport::fromDsn(env('MAILER_DSN'));
         $mailer = new Mailer($transport);
-        $fromEmail = env('MAIL_USERNAME');
+        $fromEmail = env('MAIL_USERNAME_FACTURACION');
 
         $ccEmails = Process::where('process_type', 'pedido')
             ->pluck('email')
             ->toArray();
         $clientEmail = $purchaseOrder->client->email;
+        $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
+
         $ccEmailsString = implode(',', $ccEmails);
+        $executiveEmail = $purchaseOrder->client->executive_email;
+
+        $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
 
         $email = (new Email())
             ->from($fromEmail)
-            ->cc($ccEmailsString)
+            //->cc($ccEmailsString)
             ->to($clientEmail)
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_status_changed_plain', ['purchaseOrder' => $purchaseOrder])->render());

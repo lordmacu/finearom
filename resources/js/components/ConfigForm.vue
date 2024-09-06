@@ -5,7 +5,7 @@
             {{ message }}
         </div>
 
-        <!-- Formulario de subida de archivo -->
+        <!-- Formulario de subida de archivo 
         <form @submit.prevent="submitUploadForm" class="mb-4">
             <div class="mb-4">
                 <label for="fileUpload" class="block text-gray-700 text-sm font-bold mb-2">Subir Archivo Excel</label>
@@ -17,7 +17,7 @@
                 </button>
             </div>
         </form>
-
+-->
         <!-- Filtro de procesos -->
         <div class="mb-4">
             <label for="filterProcess" class="block text-gray-700 text-sm font-bold mb-2">Filtrar por Proceso</label>
