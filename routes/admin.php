@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\{
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => config('admin.prefix'),
-    'middleware' => ['auth', 'verified'],
+    'middleware' => ['auth'],
     'as' => 'admin.',
 ], function () {
 
