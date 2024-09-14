@@ -19,7 +19,46 @@
                 $creationDate = request('creation_date'); // Obtener el valor de creation_date
                 $dateRange = $creationDate ?? ($startOfMonth . ' - ' . $endOfMonth); // Si existe creation_date, usarlo, si no usar inicio y fin del mes
             @endphp
-            
+
+<a href="{{ url('/admin/purchase_orders?status=processing&creation_date=' . $dateRange) }}" class="block bg-orange-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-orange-300">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Ordenes en Proceso</h3>
+    <p class="mt-1 text-3xl leading-9 font-semibold text-gray-900">{{ $processingOrders->count() }}</p>
+    
+    <p class="mt-4 text-xl leading-7 font-medium text-gray-900">
+        <span class="text-base">Total en Pesos:</span> ${{ number_format($totalPriceProcessingMonth) }}
+    </p>
+    
+    <p class="mt-1 text-xl leading-7 font-medium text-gray-900">
+       <strong> <span class="text-base">Total en USD:</span> &dollar;{{ number_format($totalPriceProcessingDollars, 2) }}</strong>
+    </p>
+</a>
+
+<a href="{{ url('/admin/purchase_orders?status=completed&creation_date=' . $dateRange) }}" class="block bg-green-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-green-300">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Ordenes Completadas</h3>
+    <p class="mt-1 text-3xl leading-9 font-semibold text-gray-900">{{ $completedOrders->count() }}</p>
+    
+    <p class="mt-4 text-xl leading-7 font-medium text-gray-900">
+        <span class="text-base">Total en Pesos:</span> ${{ number_format($totalPriceCompletedMonth) }}
+    </p>
+    
+    <p class="mt-1 text-xl leading-7 font-medium text-gray-900">
+        <strong><span class="text-base">Total en USD:</span> &dollar;{{ number_format($totalPriceCompletedDollars, 2) }}</strong>
+    </p>
+</a>
+
+<a href="{{ url('/admin/purchase_orders?status=pending&creation_date=' . $dateRange) }}" class="block bg-yellow-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-yellow-300">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Ordenes Pendientes</h3>
+    <p class="mt-1 text-3xl leading-9 font-semibold text-gray-900">{{ $pendingOrders->count() }}</p>
+    
+    <p class="mt-4 text-xl leading-7 font-medium text-gray-900">
+        <span class="text-base">Total en Pesos:</span> ${{ number_format($totalPricePendingMonth) }}
+    </p>
+    
+    <p class="mt-1 text-xl leading-7 font-medium text-gray-900">
+        <strong><span class="text-base">Total en USD:</span> &dollar;{{ number_format($totalPricePendingDollars, 2) }}</strong>
+    </p>
+</a>
+
             
             <a href="{{ url('/admin/purchase_orders?creation_date=' . $dateRange) }}" class="block bg-blue-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-blue-300">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Todas las Ordenes del Mes</h3>
@@ -34,44 +73,9 @@
                 </p>
             </a>
             
-            <a href="{{ url('/admin/purchase_orders?status=completed&creation_date=' . $dateRange) }}" class="block bg-green-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-green-300">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Ordenes Completadas</h3>
-                <p class="mt-1 text-3xl leading-9 font-semibold text-gray-900">{{ $completedOrders->count() }}</p>
-                
-                <p class="mt-4 text-xl leading-7 font-medium text-gray-900">
-                    <span class="text-base">Total en Pesos:</span> ${{ number_format($totalPriceCompletedMonth) }}
-                </p>
-                
-                <p class="mt-1 text-xl leading-7 font-medium text-gray-900">
-                    <strong><span class="text-base">Total en USD:</span> &dollar;{{ number_format($totalPriceCompletedDollars, 2) }}</strong>
-                </p>
-            </a>
-            
-            <a href="{{ url('/admin/purchase_orders?status=pending&creation_date=' . $dateRange) }}" class="block bg-yellow-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-yellow-300">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Ordenes Pendientes</h3>
-                <p class="mt-1 text-3xl leading-9 font-semibold text-gray-900">{{ $pendingOrders->count() }}</p>
-                
-                <p class="mt-4 text-xl leading-7 font-medium text-gray-900">
-                    <span class="text-base">Total en Pesos:</span> ${{ number_format($totalPricePendingMonth) }}
-                </p>
-                
-                <p class="mt-1 text-xl leading-7 font-medium text-gray-900">
-                    <strong><span class="text-base">Total en USD:</span> &dollar;{{ number_format($totalPricePendingDollars, 2) }}</strong>
-                </p>
-            </a>
-            
-            <a href="{{ url('/admin/purchase_orders?status=processing&creation_date=' . $dateRange) }}" class="block bg-orange-200 overflow-hidden shadow-xl sm:rounded-lg p-6 mb-4 hover:bg-orange-300">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Ordenes en Proceso</h3>
-                <p class="mt-1 text-3xl leading-9 font-semibold text-gray-900">{{ $processingOrders->count() }}</p>
-                
-                <p class="mt-4 text-xl leading-7 font-medium text-gray-900">
-                    <span class="text-base">Total en Pesos:</span> ${{ number_format($totalPriceProcessingMonth) }}
-                </p>
-                
-                <p class="mt-1 text-xl leading-7 font-medium text-gray-900">
-                   <strong> <span class="text-base">Total en USD:</span> &dollar;{{ number_format($totalPriceProcessingDollars, 2) }}</strong>
-                </p>
-            </a>
+
+  
+
             
                 
                 
@@ -139,7 +143,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     @php
                                         $total = $purchaseOrder->products->sum(function($product) use($purchaseOrder) {
-                                            return ($product->price * $product->pivot->quantity) / $purchaseOrder->trm;
+                                            return ($product->price * $product->pivot->quantity);
                                         });
                                     @endphp
                                     {{ number_format($total, 2, ',', '.') }}

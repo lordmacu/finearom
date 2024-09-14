@@ -93,4 +93,6 @@ Route::group([
     Route::get('clients/export', [ClientController::class, 'exportExcel'])->name('admin.clients.export');
     Route::get('branch-offices/export', [BranchOfficeController::class, 'exportExcel'])->name('admin.branch-offices.export');
 
+    Route::post('purchase_orders/addObservation', [PurchaseOrderController::class, 'addObservation'])->name('purchase_orders.addObservation');
+
 });

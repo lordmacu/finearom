@@ -24,23 +24,27 @@ class PurchaseOrderImport implements ToModel, WithHeadingRow
             return $value;
         }, $row);
 
-        // Convertir los nombres a "Title Case"
-        $client_name = ucwords($cleaned_row['cliente']);
-        $executive = ucwords($cleaned_row['ejecutiva_de_cuenta']);
-        $dispatch_confirmation_contact = ucwords($cleaned_row['contacto_confirmacion_despacho']);
-        $accounting_contact = ucwords($cleaned_row['contacto_cartera_contabilidad']);
-        $delivery_address = ucwords($cleaned_row['direccion_de_entrega_1']);
-        $delivery_city = ucwords($cleaned_row['ciudad_entrega_1']);
-        $registration_address = ucwords($cleaned_row['direccion_de_radicacion']);
-        $registration_city = ucwords($cleaned_row['ciudad_radicacion']);
-        $status = $cleaned_row['estado_cliente'] === 'activo' ? 'active' : 'inactive';
+        $client = Client::where('nit', $cleaned_row['nit'])->first();
+        if(!$client){
 
-        if ($client_name) {
-            $user = User::create([
-                'name' => $client_name,
-                'email' => $cleaned_row['email'],
-                'password' => Hash::make($cleaned_row['nit']),
-            ]);
+            $client_name = ucwords($cleaned_row['cliente']);
+            $executive = ucwords($cleaned_row['ejecutiva_de_cuenta']);
+            $dispatch_confirmation_contact = ucwords($cleaned_row['contacto_confirmacion_despacho']);
+            $accounting_contact = strtolower($cleaned_row['contacto_cartera_contabilidad']);
+            $delivery_address = strtolower($cleaned_row['direccion_de_entrega_1']);
+            $delivery_city = strtolower($cleaned_row['ciudad_entrega_1']);
+            $registration_address = strtolower($cleaned_row['direccion_de_radicacion']);
+            $registration_city = ucwords($cleaned_row['ciudad_radicacion']);
+            $status = $cleaned_row['estado_cliente'] === 'activo' ? 'active' : 'inactive';
+
+            if ($client_name) {
+
+                $user = User::create([
+                    'name' => $client_name,
+                    'email' => $cleaned_row['correo_confirmacion_despachos'] ?? $cleaned_row['contacto_cartera_contabilidad'],
+                    'password' => Hash::make($cleaned_row['nit']),
+                ]);
+                
 
             $user->assignRole('order-creator');
 
@@ -50,7 +54,7 @@ class PurchaseOrderImport implements ToModel, WithHeadingRow
                 'client_name' => $client_name,
                 'nit' => $cleaned_row['nit'],
                 'executive' => $executive,
-                'accounting_contact_email' => $cleaned_row['correo_contacto_cartera_contabilidad'],
+                'accounting_contact_email' => $cleaned_row['contacto_cartera_contabilidad'],
                 'executive_email' => $cleaned_row['correo_ejecutiva'],
                 'supplier_location' => ucwords($cleaned_row['maquilador_sede']),
                 'dispatch_confirmation_contact' => $dispatch_confirmation_contact,
@@ -85,8 +89,8 @@ class PurchaseOrderImport implements ToModel, WithHeadingRow
 
             // Crear sucursales adicionales si existen
             for ($i = 2; $i <= 8; $i++) {
-                $city_key = 'sucursal_ciudad_' . $i;
-                $address_key = 'sucursal_direccion_' . $i;
+                    $city_key = 'ciudad_' . $i;
+                    $address_key = 'direccion_' . $i;
 
                 if (!empty($cleaned_row[$city_key]) && !empty($cleaned_row[$address_key])) {
                     BranchOffice::create([
@@ -100,4 +104,5 @@ class PurchaseOrderImport implements ToModel, WithHeadingRow
             }
         }
     }
+}
 }

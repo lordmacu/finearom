@@ -40,8 +40,8 @@
                 <td>{{ $product->product_name }}</td>
                 <td>{{ $product->code }}</td>
                 <td>{{ $product->pivot->quantity }}</td>
-                <td>{{ number_format(($product->price/ $purchaseOrder->trm), 2) }}</td>
-                <td>{{ number_format((($product->price * $product->pivot->quantity) / $purchaseOrder->trm ), 2) }}</td>
+                <td>{{ number_format(($product->price), 2) }}</td>
+                <td>{{ number_format((($product->price * $product->pivot->quantity) ), 2) }}</td>
                 <td>{{ $purchaseOrder->getBranchOfficeName($product) }}</td>
             </tr>
             @endforeach
@@ -49,7 +49,7 @@
                 <td colspan="4"></td>
                 <td><strong>TOTAL</strong></td>
                 <td><strong>{{ number_format($purchaseOrder->products->sum(function($product) use ($purchaseOrder) {
-                    return ($product->price * $product->pivot->quantity)/ $purchaseOrder->trm;
+                    return ($product->price * $product->pivot->quantity);
                 }), 2) }} USD</strong></td>
             </tr>
         </tbody>

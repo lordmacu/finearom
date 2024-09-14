@@ -236,35 +236,49 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $subtotal = 0;
+                    @endphp
                     @foreach($purchaseOrder->products as $product)
                     <tr>
                         <td>{{ $product->product_name }}</td>
-                        <td>{{ number_format($product->price * $exchange, 2) }}</td>
+                        <td>{{ number_format($product->price, 2) }}</td>
                         <td>{{ $product->pivot->quantity }}</td>
-                        <td>{{ number_format($product->price * $exchange * $product->pivot->quantity, 2) }}</td>
+                        <td>{{ number_format($product->price * $product->pivot->quantity, 2) }}</td>
                         <td>{{ $purchaseOrder->getBranchOfficeName($product) }}</td> <!-- Show the branch office name -->
                     </tr>
+                    @php
+                        $subtotal += $product->price * $product->pivot->quantity;
+                    @endphp
                     @endforeach
                 </tbody>
             </table>
         </div>
 
+        @php
+            $ivaRate = 0.19;  // Tasa de IVA del 19%
+            $reteicaRate = 0.01; // Tasa de reteICA del 1%
+            $iva = $subtotal * $ivaRate;
+            $reteica = $subtotal * $reteicaRate;
+            $total = $subtotal + $iva - $reteica;
+        @endphp
+
         <div class="totals-section">
             <table class="totals-table">
                 <tr>
-                    <th style="text-align: right; color: #686868; line-height: 50px; font-family: 'Helvetica', sans-serif;">Total parcial</th>
+                    <th style="text-align: right; color: #686868; line-height: 50px; font-family: 'Helvetica', sans-serif;">Subtotal</th>
                     <td style="color: #686868; font-size: 18px; font-family: 'Helvetica', sans-serif;"><strong>{{ number_format($subtotal, 2) }} USD</strong></td>
                 </tr>
                 <tr>
-                    <td style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;">Iva:</td>
+                    <td style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;">IVA (19%)</td>
                     <td style="font-family: 'Helvetica', sans-serif;">{{ number_format($iva, 2) }} USD</td>
                 </tr>
                 <tr>
-                    <td style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;">Retefuente y RetelICA:</td>
+                    <td style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;">ReteICA (1%)</td>
                     <td style="font-family: 'Helvetica', sans-serif;">{{ number_format($reteica, 2) }} USD</td>
                 </tr>
                 <tr>
-                    <th style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;"><strong>Total:</strong></th>
+                    <th style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;"><strong>Total</strong></th>
                     <td style="color: #686868; font-size: 18px; font-family: 'Helvetica', sans-serif;"><strong>{{ number_format($total, 2) }} USD</strong></td>
                 </tr>
             </table>

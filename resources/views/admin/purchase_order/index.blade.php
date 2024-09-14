@@ -159,6 +159,22 @@
                                 </div>
                             </td>
                             <td class="icon-btn">
+                                <a href="#"
+                                onclick="openObservationsModal(
+                                    {{ $purchaseOrder->id }},
+                                    '{{ $purchaseOrder->order_consecutive }}',
+                                    `{!! nl2br(e($purchaseOrder->observations_extra)) !!}`
+                                )"
+                             >
+                                 <svg xmlns="http://www.w3.org/2000/svg"
+                                      class="w-6 h-6 {{ !empty($purchaseOrder->observations_extra) ? 'text-green-500' : 'text-gray-500' }}"
+                                      fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                     <path stroke-linecap="round"
+                                           stroke-linejoin="round"
+                                           stroke-width="2"
+                                           d="M8 10h.01M12 10h.01M16 10h.01M21 14a2 2 0 01-2 2H7l-4 4V6a2 2 0 012-2h12a2 2 0 012 2v8z"/>
+                                 </svg>
+                             </a>
                                 <a class="pt-2" href="{{ route('admin.purchase_orders.show', $purchaseOrder->id) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="text-blue-500">
                                         <path fill="currentColor" d="M12 4.5C7 4.5 2.73 8 1 12c1.73 4 6 7.5 11 7.5s9.27-3.5 11-7.5c-1.73-4-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
@@ -206,6 +222,50 @@
             {{ $purchaseOrders->appends(request()->except('page'))->links() }}
         </div>
     </div>
+
+<!-- Modal de Observaciones -->
+<div id="observationsModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
+        <!-- Fondo oscuro -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+        <!-- Contenido del modal -->
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <form method="POST" action="{{ route('admin.purchase_orders.addObservation') }}" id="observationsForm">
+                @csrf
+                @method('POST')
+
+                <!-- Campo oculto para el ID de la orden -->
+                <input type="hidden" id="purchaseOrderId" name="purchase_order_id" value="">
+
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                        Observaciones de la Orden <span id="orderConsecutive"></span>
+                    </h3>
+                    <div class="mt-2">
+                        <div class="text-sm text-gray-500" id="currentObservations" style="white-space: pre-wrap;">
+                            <!-- Aquí se mostrarán las observaciones actuales -->
+                        </div>
+                        <div class="mt-4">
+                            <label for="newObservation" class="block text-sm font-medium text-gray-700">Agregar Nueva Observación</label>
+                            <textarea id="newObservation" name="new_observation" rows="3" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="submit" id="saveObservation" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        Guardar
+                    </button>
+                    <button type="button" id="cancelObservation" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Modal -->
 <div id="confirmationModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -278,6 +338,20 @@
 <script>
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    window.openObservationsModal = function(purchaseOrderId, orderConsecutive, observationsExtra) {
+        document.getElementById('purchaseOrderId').value = purchaseOrderId;
+        document.getElementById('orderConsecutive').textContent = orderConsecutive;
+        document.getElementById('currentObservations').innerHTML = observationsExtra || 'Sin observaciones';
+        document.getElementById('newObservation').value = '';
+        document.getElementById('observationsModal').classList.remove('hidden');
+    }
+
+    // Cerrar el modal al hacer clic en "Cancelar"
+    document.getElementById('cancelObservation').addEventListener('click', function() {
+        document.getElementById('observationsModal').classList.add('hidden');
+    });
+
     const selects = document.querySelectorAll('select[name="status"]');
     const modal = document.getElementById('confirmationModal');
     document.getElementById('cancelStatusChange').addEventListener('click', function() {

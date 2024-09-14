@@ -129,7 +129,8 @@
                                                 </select>
                                             </td>
                                             <td class="py-2 px-4 border-b product-price" :data-price="product.price">
-                                                {{ (product.price / trmCalculated).toFixed(2) }}
+
+                                                {{ (product.price) }}
                                             </td>
                                             <td class="py-2 px-4 border-b">
                                                 <input v-model.number="product.quantity" type="number" min="1"
@@ -138,7 +139,7 @@
                                             </td>
                                             <td class="py-2 px-4 border-b product-total" :data-price="product.price"
                                                 :data-quantity="product.quantity">
-                                                {{ ((product.price * product.quantity) / trmCalculated).toFixed(2) }}
+                                                {{ ((product.price * product.quantity)).toFixed(2) }}
                                             </td>
                                             <td class="py-2 px-4 border-b">
                                                 <select v-model="product.branch_office_id"
@@ -281,7 +282,7 @@
             return new Date().toISOString().split('T')[0];
         },
         subtotal() {
-            return this.products.reduce((sum, product) => sum + (product.price * product.quantity) / this.trmCalculated, 0);
+            return this.products.reduce((sum, product) => sum + (product.price * product.quantity), 0);
         },
         iva() {
             return this.subtotal * 0.19;
@@ -315,7 +316,7 @@
             }
         },
         updateProductTotal(product) {
-            product.total = product.price * product.quantity * this.trmActual;
+            product.total = product.price * product.quantity;
         },
         updateAllProductTotals() {
             this.products.forEach(product => {
@@ -457,7 +458,7 @@
                     if (this.purchaseOrder == null) {
                         this.$swal('Se ha creado la orden de compra con éxito!', { icon: 'success' });
 
-                     //   window.location.href = `/admin/purchase_orders/${purchaseOrderId}/edit`;
+                        window.location.href = `/admin/purchase_orders/${purchaseOrderId}/edit`;
                     } else {
                         this.$swal('Se ha actualizado la orden de compra con éxito!', { icon: 'success' });
                     }

@@ -15,34 +15,39 @@ class ProductImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         try {
-            if ($row['estado'] != "INACTIVA" && $row['rev'] != "delete") {
-                // Buscar el cliente por NIT
-                $client = Client::where('nit', $row['nit'])->first();
-    
-                // Si no se encuentra el cliente, lanzar una excepción
-                if (!$client) {
-                    throw new \Exception("No existe cliente");
-                }
-    
-                // Verificar si el producto ya existe por código
-                $existingProduct = Product::where('code', $row['nit_cod'])->first();
-    
-                if (!$existingProduct) {
-                    // Crear el producto asociado al cliente si no existe
-                    Product::create([
-                        'code' => $row['nit_cod'],
-                        'product_name' => $row['referencia_codigo'],
-                        'price' => $row['price'] ?? 0,
-                        'client_id' => $client->id,
-                    ]);
+
+            $producto = Product::where('code', $row['nit_codigo'])->first();
+            if (!$producto) {
+
+                if ($row['estado'] != "INACTIVA") {
+                    // Buscar el cliente por NIT
+                    $client = Client::where('nit', $row['nit'])->first();
+
+                    // Si no se encuentra el cliente, lanzar una excepción
+                    if (!$client) {
+                        throw new \Exception("No existe cliente");
+                    }
+
+                    // Verificar si el producto ya existe por código
+                    $existingProduct = Product::where('code', $row['nit_codigo'])->first();
+
+                    if (!$existingProduct) {
+                        // Crear el producto asociado al cliente si no existe
+                        Product::create([
+                            'code' => $row['nit_codigo'],
+                            'product_name' => $row['referencia_codigo'],
+                            'price' => $row['precios_2024_comercial'] ?? 0,
+                            'client_id' => $client->id,
+                        ]);
+                    }
                 }
             }
         } catch (\Exception $e) {
             // Si ocurre un error, añadirlo al array de errores
-            $this->errors[] = ['product' => $row['referencia_codigo'], 'nit_cod' => $row['nit_cod'], 'nit' => $row['nit'], 'error' => $e->getMessage()];
+            $this->errors[] = ['product' => $row['referencia_codigo'], 'nit_cod' => $row['nit_codigo'], 'nit' => $row['nit'], 'error' => $e->getMessage()];
         }
     }
-    
+
 
     // Método para obtener los errores
     public function getErrors()

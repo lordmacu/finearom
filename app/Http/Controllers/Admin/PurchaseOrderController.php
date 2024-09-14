@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\PurchaseOrderMail;
 use App\Mail\PurchaseOrderStatusChangedMail;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\PurchaseOrder;
 use App\Models\Product;
@@ -99,7 +100,7 @@ class PurchaseOrderController extends Controller
             $query->orderBy($sortBy, $sortOrder);
         }
 
-        $purchaseOrders = $query->paginate(10); // Paginación de 10 elementos por página
+        $purchaseOrders = $query->paginate(50); // Paginación de 10 elementos por página
         $clients = Client::all(); // Para poblar el dropdown de clientes
 
         return view('admin.purchase_order.index', compact('purchaseOrders', 'clients', 'sortBy', 'sortOrder'));
@@ -233,7 +234,7 @@ class PurchaseOrderController extends Controller
             $pdfContent = $this->generatePdfOrder($purchaseOrder);
 
 
-            $clientEmail= $purchaseOrder->client->email;
+            $clientEmail = $purchaseOrder->client->email;
 
             $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
 
@@ -244,19 +245,20 @@ class PurchaseOrderController extends Controller
             $ccEmails = Process::where('process_type', 'pedido')
                 ->pluck('email')
                 ->toArray();
-            $ccEmails = array_merge(explode(',', $ccEmails), [$executiveEmail,$coordinator]);
+            //  dd($ccEmails);
+            $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
             Mail::to(explode(',', $clientEmail))
-               //demo ->cc($ccEmails)
+                //demo ->cc($ccEmails)
                 ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));
 
             $ccEmails = Process::where('process_type', 'orden_de_compra')
                 ->pluck('email')
                 ->toArray();
-            $ccEmails = array_merge(explode(',', $ccEmails), [$executiveEmail, $coordinator]);
+            $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
             Mail::to(explode(',', $clientEmail))
-             //demo   ->cc($ccEmails)
+                //demo   ->cc($ccEmails)
                 ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));
 
             return response()->json([
@@ -308,18 +310,65 @@ class PurchaseOrderController extends Controller
             $purchaseOrder->invoice_number = $request->input('invoice_number');
             $purchaseOrder->dispatch_date = $request->input('dispatch_date');
             $purchaseOrder->tracking_number = $request->input('tracking_number');
-            $purchaseOrder->observations_extra = $request->input('observations');
+           // $purchaseOrder->observations_extra = $request->input('observations');
+    
+            $newObservation = $request->input('observations');
+            $currentObservations = $purchaseOrder->observations_extra ?? '';
+        
+            $userName = Auth::user()->name;
+    
+            // Agregar separador, timestamp y nombre de usuario
+            $separator = "\n---\n";
+            $timestamp = now()->format('Y-m-d H:i:s');
+        
+            // Construir la nueva entrada de observación
+            $observationEntry = $separator . $timestamp . " - " . $userName . "\n" . $newObservation;
+        
+            // Concatenar la nueva observación con las existentes
+            $purchaseOrder->observations_extra = $observationEntry . $currentObservations;
+
             $this->sendStatusChangedEmailsCompleteAndPartial($purchaseOrder);
         } else {
             $this->sendStatusChangedEmails($purchaseOrder, $oldStatus);
         }
 
-
         $purchaseOrder->save();
-
 
         return redirect()->route('admin.purchase_orders.index')->with('message', 'Estado de la orden actualizado exitosamente.');
     }
+
+
+    public function addObservation(Request $request)
+    {
+
+        $request->validate([
+            'purchase_order_id' => 'required|exists:purchase_orders,id',
+            'new_observation' => 'required|string',
+        ]);
+    
+        $purchaseOrder = PurchaseOrder::findOrFail($request->input('purchase_order_id'));
+    
+        $newObservation = $request->input('new_observation');
+        $currentObservations = $purchaseOrder->observations_extra ?? '';
+    
+        $userName = Auth::user()->name;
+
+        // Agregar separador, timestamp y nombre de usuario
+        $separator = "\n---\n";
+        $timestamp = now()->format('Y-m-d H:i:s');
+    
+        // Construir la nueva entrada de observación
+        $observationEntry = $separator . $timestamp . " - " . $userName . "\n" . $newObservation;
+    
+        // Concatenar la nueva observación con las existentes
+        $purchaseOrder->observations_extra = $observationEntry . $currentObservations;
+    
+        $purchaseOrder->save();
+    
+        return redirect()->back()->with('success', 'Observación agregada exitosamente.');
+    }
+    
+
     public function sendStatusChangedEmailsCompleteAndPartial(PurchaseOrder $purchaseOrder)
     {
         $clientEmail = $purchaseOrder->client->email;
@@ -346,7 +395,7 @@ class PurchaseOrderController extends Controller
         $email = (new Email())
             ->from($fromEmail)
             ->to($clientEmail)
-        //    ->cc($ccEmailsString)
+            //    ->cc($ccEmailsString)
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_email_complete_partial', ['purchaseOrder' => $purchaseOrder])->render());
 

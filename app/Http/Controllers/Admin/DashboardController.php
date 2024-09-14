@@ -67,52 +67,52 @@ class DashboardController extends Controller
         // Calculate total prices for all orders
         $totalPriceAllMonth = $allOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity;
+                return (float) $product->price * $product->pivot->quantity * (float) $order->trm;
             });
         }, 0);
 
         $totalPriceAllDollars = $allOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity / (float) $order->trm;
+                return (float) $product->price * $product->pivot->quantity;
             });
         }, 0);
 
         // Calculate total prices for completed orders
         $totalPriceCompletedMonth = $completedOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity;
+                return (float) $product->price * $product->pivot->quantity * (float) $order->trm;
             });
         }, 0);
 
         $totalPriceCompletedDollars = $completedOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity / (float) $order->trm;
+                return (float) $product->price * $product->pivot->quantity;
             });
         }, 0);
 
         // Calculate total prices for pending orders
         $totalPricePendingMonth = $pendingOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity;
+                return (float) $product->price * $product->pivot->quantity * (float) $order->trm;
             });
         }, 0);
 
         $totalPricePendingDollars = $pendingOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity / (float) $order->trm;
+                return (float) $product->price * $product->pivot->quantity;
             });
         }, 0);
 
         // Calculate total prices for processing orders
         $totalPriceProcessingMonth = $processingOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity;
+                return (float) $product->price * $product->pivot->quantity * (float) $order->trm;
             });
         }, 0);
 
         $totalPriceProcessingDollars = $processingOrders->reduce(function ($carry, $order) {
             return $carry + $order->products->sum(function ($product) use ($order) {
-                return (float) $product->price * $product->pivot->quantity / (float) $order->trm;
+                return (float) $product->price * $product->pivot->quantity;
             });
         }, 0);
 
