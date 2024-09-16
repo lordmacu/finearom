@@ -301,6 +301,7 @@ class PurchaseOrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $purchaseOrder = PurchaseOrder::findOrFail($id);
+        dd($purchaseOrder);
         $oldStatus = $purchaseOrder->status;
 
         $purchaseOrder->status = $request->input('status');
