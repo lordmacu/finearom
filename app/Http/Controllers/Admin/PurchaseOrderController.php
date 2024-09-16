@@ -300,9 +300,9 @@ class PurchaseOrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        dd('asfa.s');
+        dd('asfa.s', env('MAILER_DSN'));
         $purchaseOrder = PurchaseOrder::findOrFail($id);
-        dd($purchaseOrder);
+
         $oldStatus = $purchaseOrder->status;
 
         $purchaseOrder->status = $request->input('status');
