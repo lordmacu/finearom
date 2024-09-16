@@ -36,21 +36,14 @@ class BackupDatabaseJob implements ShouldQueue
         // Crear el nombre del archivo de backup con timestamp
         $fileName = 'backup_' . now()->format('Y-m-d_H-i-s') . '.sql';
 
-        dd([
+
+        // Comando para generar el backup
+        $process = new Process([
             'mysqldump',
             '--user=' . $dbUsername,
             '--password=' . $dbPassword,
             '--host=' . $dbHost,
             $dbName,
-            '--result-file=' . $backupPath . $fileName,
-        ]);
-        // Comando para generar el backup
-        $process = new Process([
-            'mysqldump',
-            '--user=' . env('DB_USERNAME'),
-            '--password=' . env('DB_PASSWORD'),
-            '--host=' . env('DB_HOST'),
-            env('DB_DATABASE'),
             '--result-file=' . $backupPath . $fileName,
         ]);
 
