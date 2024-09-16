@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new \App\Jobs\BackupDatabaseJob)->everyTwoHours();
+        $schedule->job(new \App\Jobs\BackupDatabaseJob)->hourly();
     }
 
     /**
