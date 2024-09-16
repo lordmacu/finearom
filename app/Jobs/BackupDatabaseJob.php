@@ -10,6 +10,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Config; // Importar Config
+
 
 class BackupDatabaseJob implements ShouldQueue
 {
@@ -21,6 +23,10 @@ class BackupDatabaseJob implements ShouldQueue
     public function handle()
     {
       
+        $dbHost = config('database.connections.mysql.host');
+        $dbUsername = config('database.connections.mysql.username');
+        $dbPassword = config('database.connections.mysql.password');
+        $dbName = config('database.connections.mysql.database');
         // Ruta para almacenar el backup en storage/app/backups
         $backupPath = storage_path('app/backups/');
         if (!file_exists($backupPath)) {
@@ -32,10 +38,10 @@ class BackupDatabaseJob implements ShouldQueue
 
         dd([
             'mysqldump',
-            '--user=' . env('DB_USERNAME'),
-            '--password=' . env('DB_PASSWORD'),
-            '--host=' . env('DB_HOST'),
-            env('DB_DATABASE'),
+            '--user=' . $dbUsername,
+            '--password=' . $dbPassword,
+            '--host=' . $dbHost,
+            $dbName,
             '--result-file=' . $backupPath . $fileName,
         ]);
         // Comando para generar el backup
