@@ -12,6 +12,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PurchaseOrderImport;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Config; // Importar Config
+z
 class AdminConfigurationController extends Controller
 {
 
@@ -58,13 +60,21 @@ class AdminConfigurationController extends Controller
             return redirect()->back()->with('message', 'El archivo de backup seleccionado no existe.');
         }
 
-        // Ejecutar el comando de restauración de MySQL
+              
+        $dbHost = config('database.connections.mysql.host');
+        $dbUsername = config('database.connections.mysql.username');
+        $dbPassword = config('database.connections.mysql.password');
+        $dbName = config('database.connections.mysql.database');
+
+
+        
+
         $process = new Process([
             'mysql',
-            '--user=' . env('DB_USERNAME'),
-            '--password=' . env('DB_PASSWORD'),
-            '--host=' . env('DB_HOST'),
-            env('DB_DATABASE'),
+            '--user=' . $dbUsername,
+            '--password=' . $dbPassword,
+            '--host=' .$dbHost,
+            $dbName,
             '-e',
             'source ' . $backupPath
         ]);
