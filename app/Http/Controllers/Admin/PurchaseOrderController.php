@@ -248,18 +248,18 @@ class PurchaseOrderController extends Controller
             
             $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
-            Mail::to(explode(',', $clientEmail))
+           /* Mail::to(explode(',', $clientEmail))
                 ->cc($ccEmails)
-                ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));
+                ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));*/
 
             $ccEmails = Process::where('process_type', 'orden_de_compra')
                 ->pluck('email')
                 ->toArray();
             $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
-            Mail::to(explode(',', $executiveEmail))
+           /* Mail::to(explode(',', $executiveEmail))
                 ->cc($ccEmails)
-                ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));
+                ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));*/
 
             return response()->json([
                 'message' => 'Purchase Order created successfully.',
