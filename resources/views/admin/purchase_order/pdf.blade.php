@@ -260,7 +260,7 @@
             $reteicaRate = 0.01; // Tasa de reteICA del 1%
             $iva = $subtotal * $ivaRate;
             $reteica = $subtotal * $reteicaRate;
-            $total = $subtotal + $iva - $reteica;
+            $total = $subtotal; //+ $iva - $reteica;
         @endphp
 
         <div class="totals-section">
@@ -268,14 +268,6 @@
                 <tr>
                     <th style="text-align: right; color: #686868; line-height: 50px; font-family: 'Helvetica', sans-serif;">Subtotal</th>
                     <td style="color: #686868; font-size: 18px; font-family: 'Helvetica', sans-serif;"><strong>{{ number_format($subtotal, 2) }} USD</strong></td>
-                </tr>
-                <tr>
-                    <td style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;">IVA (19%)</td>
-                    <td style="font-family: 'Helvetica', sans-serif;">{{ number_format($iva, 2) }} USD</td>
-                </tr>
-                <tr>
-                    <td style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;">ReteICA (1%)</td>
-                    <td style="font-family: 'Helvetica', sans-serif;">{{ number_format($reteica, 2) }} USD</td>
                 </tr>
                 <tr>
                     <th style="text-align: right; color: #686868; font-family: 'Helvetica', sans-serif;"><strong>Total</strong></th>

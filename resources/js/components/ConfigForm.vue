@@ -23,9 +23,9 @@
             <label for="filterProcess" class="block text-gray-700 text-sm font-bold mb-2">Filtrar por Proceso</label>
             <select v-model="filterProcess" id="filterProcess" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 <option value="">Todos</option>
-                <option value="orden_de_compra">1 Orden de Compra</option>
-                <option value="confirmacion_despacho">2 Confirmación Despacho</option>
-                <option value="pedido">3 Pedido</option>
+                <option value="orden_de_compra">1 Orden de Compra a planta</option>
+                <option value="confirmacion_despacho">2 Confirmación Despacho a cliente</option>
+                <option value="pedido">3 Recepción orden de compra</option>
             </select>
         </div>
 
@@ -91,7 +91,7 @@ export default {
     data() {
         return {
             rows: [...this.initialRows],
-            filterProcess: '',
+            filterProcess: 'orden_de_compra',
             file: null // Agregar archivo
         }
     },

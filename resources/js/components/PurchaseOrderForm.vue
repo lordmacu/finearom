@@ -174,8 +174,8 @@
                                 <div class="bg-white rounded-lg w-3/5">
                                     <div class="text-lg font-bold">Total parcial: <span>{{ subtotal.toFixed(2) }}</span>
                                         USD</div>
-                                    <div>Iva: <span>{{ iva.toFixed(2) }}</span> USD</div>
-                                    <div>ReteICA: <span>{{ reteica.toFixed(2) }}</span> USD</div>
+                                  <!--  <div>Iva: <span>{{ iva.toFixed(2) }}</span> USD</div>
+                                    <div>ReteICA: <span>{{ reteica.toFixed(2) }}</span> USD</div> -->
                                     <div>
                                         <span class="text-lg font-bold">Total: <span>{{ total.toFixed(2) }}</span>
                                             USD</span>
@@ -291,7 +291,7 @@
             return this.subtotal * 0.00966;
         },
         total() {
-            return this.subtotal + this.iva + this.reteica;
+            return this.subtotal; // + this.iva + this.reteica;
         },
         canAddProduct() {
             return true;

@@ -175,11 +175,6 @@
                                            d="M8 10h.01M12 10h.01M16 10h.01M21 14a2 2 0 01-2 2H7l-4 4V6a2 2 0 012-2h12a2 2 0 012 2v8z"/>
                                  </svg>
                              </a>
-                                <a class="pt-2" href="{{ route('admin.purchase_orders.show', $purchaseOrder->id) }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="text-blue-500">
-                                        <path fill="currentColor" d="M12 4.5C7 4.5 2.73 8 1 12c1.73 4 6 7.5 11 7.5s9.27-3.5 11-7.5c-1.73-4-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
-                                    </svg>
-                                </a>
                                 <a href="{{ route('admin.purchase_orders.edit', $purchaseOrder->id) }}">
                                     <svg style="color: #e3ba41;" class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z"></path>

@@ -31,7 +31,7 @@
 
             <div class="py-2">
                 <x-admin.form.label for="executive" class="{{ $errors->has('executive') ? 'text-red-400' : '' }}">{{ __('Ejecutivo') }}</x-admin.form.label>
-                <x-admin.form.input id="executive" class="{{ $errors->has('executive') ? 'border-red-400' : '' }}" type="text" name="executive" value="{{ old('executive', $client->executive) }}" />
+                <x-admin.form.input id="executive" class="{{ $errors->has('executive') ? 'border-red-400' : '' }}" type="text" name="executive" value="{{ old('executive') }}" />
             </div>
 
             <div class="py-2">

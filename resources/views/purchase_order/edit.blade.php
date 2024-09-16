@@ -188,8 +188,6 @@
                                 <div class="w-1/2 relative flex justify-end text-right">
                                     <div class="bg-white rounded-lg w-3/5">
                                         <div class="text-lg font-bold">Total parcial: <span id="subtotal">0</span> USD</div>
-                                        <div>Iva: <span id="iva">0</span> USD</div>
-                                        <div>ReteICA: <span id="reteica">0</span> USD</div>
                                         <div>
                                             <span class="text-lg font-bold">Total: <span id="total">0</span> USD</span>
                                         </div>
@@ -253,12 +251,11 @@ function updateTotals() {
 
     const iva = subtotal * 0.19; // Supongamos que el IVA es 19%
     const reteica = subtotal * 0.00966; // Supongamos que ReteICA es 0.966%
-    const total = subtotal + iva + reteica;
+    const total = subtotal;// + iva + reteica;
 
     document.getElementById('subtotal').textContent = subtotal.toFixed(2);
     document.getElementById('iva').textContent = iva.toFixed(2);
-    document.getElementById('reteica').textContent = reteica.toFixed(2);
-    document.getElementById('total').textContent = total.toFixed(2);
+
 }
 
 
