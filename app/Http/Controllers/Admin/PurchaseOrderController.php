@@ -257,7 +257,7 @@ class PurchaseOrderController extends Controller
                 ->toArray();
             $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
-            Mail::to(explode(',', $clientEmail))
+            Mail::to(explode(',', $executiveEmail))
                 ->cc($ccEmails)
                 ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));
 
@@ -387,7 +387,7 @@ class PurchaseOrderController extends Controller
         $ccEmailsString = implode(',', $ccEmails);
 
         $fromEmail = env('MAIL_USERNAME_FACTURACION');
-
+dd('aquii '); 
         $executiveEmail = $purchaseOrder->client->executive_email;
 
         $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
