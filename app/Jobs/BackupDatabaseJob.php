@@ -34,7 +34,7 @@ class BackupDatabaseJob implements ShouldQueue
         }
 
         // Crear el nombre del archivo de backup con timestamp
-        $fileName = 'backup_' . now()->format('Y-m-d_H-i-s') . '.sql';
+        $fileName = 'backup_' . Carbon::now()->setTimezone('America/Bogota')->format('Y-m-d_H-i-s') . '.sql';
 
 
         // Comando para generar el backup
