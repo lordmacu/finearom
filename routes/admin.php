@@ -29,6 +29,8 @@ Route::group([
 
     // Configuration
     Route::get('config', [AdminConfigurationController::class, 'index'])->name('config.index');
+    Route::post('config/restore-backup', [AdminConfigurationController::class, 'restoreBackup'])->name('config.restoreBackup');
+
     Route::post('config', [AdminConfigurationController::class, 'store'])->name('config.store');
     Route::post('config/upload', [AdminConfigurationController::class, 'uploadConfig'])->name('config.upload');
 

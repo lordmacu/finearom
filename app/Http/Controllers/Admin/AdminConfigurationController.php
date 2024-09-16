@@ -25,11 +25,59 @@ class AdminConfigurationController extends Controller
         // Retrieve all the processes
         $processes = Process::all();
 
+        $backupPath = storage_path('app/backups/');
+
+        // Obtener la lista de archivos .sql en la carpeta de backups
+        $backups = collect(glob($backupPath . '*.sql'))->map(function ($path) {
+            return basename($path);
+        });
+
+
         // Return the Blade view with the processes data
         return view('admin.config', [
-            'processes' => $processes
+            'processes' => $processes,
+            'backups' => $backups,
+
         ]);
     }
+
+    /**
+     * Restaurar la base de datos desde un archivo de backup.
+     */
+    public function restoreBackup(Request $request)
+    {
+        // Validar que se haya seleccionado un archivo
+        $request->validate([
+            'backup' => 'required|string',
+        ]);
+
+        // Ruta del archivo de backup seleccionado
+        $backupPath = storage_path('app/backups/') . $request->input('backup');
+
+        if (!file_exists($backupPath)) {
+            return redirect()->back()->with('message', 'El archivo de backup seleccionado no existe.');
+        }
+
+        // Ejecutar el comando de restauración de MySQL
+        $process = new Process([
+            'mysql',
+            '--user=' . env('DB_USERNAME'),
+            '--password=' . env('DB_PASSWORD'),
+            '--host=' . env('DB_HOST'),
+            env('DB_DATABASE'),
+            '-e',
+            'source ' . $backupPath
+        ]);
+
+        $process->run();
+
+        if ($process->isSuccessful()) {
+            return redirect()->back()->with('message', 'La base de datos ha sido restaurada exitosamente.');
+        } else {
+            return redirect()->back()->with('message', 'Ocurrió un error al restaurar la base de datos.');
+        }
+    }
+
     /**
      * Store the configuration.
      *
