@@ -300,7 +300,11 @@ class PurchaseOrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        dd('asfa.s', env('MAILER_DSN'));
+        $currentTransport = config('mail.default'); // Obtiene el mailer predeterminado
+        $smtpTransport = config('mail.mailers.smtp.transport'); // Si estás usando SMTP
+    
+        dd($currentTransport, $smtpTransport);
+
         $purchaseOrder = PurchaseOrder::findOrFail($id);
 
         $oldStatus = $purchaseOrder->status;
@@ -389,7 +393,7 @@ class PurchaseOrderController extends Controller
         $ccEmailsString = implode(',', $ccEmails);
 
         $fromEmail = env('MAIL_USERNAME_FACTURACION');
-dd('aquii '); 
+
         $executiveEmail = $purchaseOrder->client->executive_email;
 
         $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
