@@ -12,6 +12,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PurchaseOrderImport;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
+use App\Models\Process as p;
+
 
 
 use Illuminate\Support\Facades\Config; // Importar Config
@@ -27,7 +29,7 @@ class AdminConfigurationController extends Controller
     public function index()
     {
         // Retrieve all the processes
-        $processes = Process::all();
+        $processes = p::all();
 
         $backupPath = storage_path('app/backups/');
 
