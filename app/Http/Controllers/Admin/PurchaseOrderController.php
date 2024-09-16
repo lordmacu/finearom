@@ -300,17 +300,7 @@ class PurchaseOrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
-        $currentTransport = config('mail.default'); // Obtiene el mailer predeterminado
-        $smtpTransport = config('mail.mailers.smtp.transport'); // Si estás usando SMTP
 
-
-        Mail::raw('Este es un correo de prueba para verificar que no se envíen correos.', function ($message) {
-            $message->to('informacion@cristiangarcia.co')
-                    ->subject('Correo de Prueba');
-        });
-
-    
-        dd($currentTransport, $smtpTransport);
 
         $purchaseOrder = PurchaseOrder::findOrFail($id);
 
@@ -417,7 +407,7 @@ class PurchaseOrderController extends Controller
             $email->getHeaders()->addTextHeader('References', '<' . $purchaseOrder->message_id . '>');
         }
 
-        $mailer->send($email);
+      //  $mailer->send($email);
     }
 
 
