@@ -20,6 +20,7 @@ class BackupDatabaseJob implements ShouldQueue
      */
     public function handle()
     {
+      
         // Ruta para almacenar el backup en storage/app/backups
         $backupPath = storage_path('app/backups/');
         if (!file_exists($backupPath)) {
@@ -29,6 +30,14 @@ class BackupDatabaseJob implements ShouldQueue
         // Crear el nombre del archivo de backup con timestamp
         $fileName = 'backup_' . now()->format('Y-m-d_H-i-s') . '.sql';
 
+        dd([
+            'mysqldump',
+            '--user=' . env('DB_USERNAME'),
+            '--password=' . env('DB_PASSWORD'),
+            '--host=' . env('DB_HOST'),
+            env('DB_DATABASE'),
+            '--result-file=' . $backupPath . $fileName,
+        ]);
         // Comando para generar el backup
         $process = new Process([
             'mysqldump',
