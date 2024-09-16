@@ -302,6 +302,13 @@ class PurchaseOrderController extends Controller
     {
         $currentTransport = config('mail.default'); // Obtiene el mailer predeterminado
         $smtpTransport = config('mail.mailers.smtp.transport'); // Si estás usando SMTP
+
+
+        Mail::raw('Este es un correo de prueba para verificar que no se envíen correos.', function ($message) {
+            $message->to('informacion@cristiangarcia.co')
+                    ->subject('Correo de Prueba');
+        });
+
     
         dd($currentTransport, $smtpTransport);
 
