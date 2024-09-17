@@ -73,13 +73,8 @@ class BranchOfficeController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'nit' => 'required|string|max:255',
-            'contact' => 'required|string|max:255',
-            'billing_contact' => 'required|string|max:255',
             'delivery_address' => 'required|string|max:255',
             'delivery_city' => 'required|string|max:255',
-            'billing_address' => 'required|string|max:255',
-            'billing_city' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
             'shipping_observations' => 'nullable|string',
             'general_observations' => 'nullable|string',
         ]);

@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Exports\ClientsExport;
+use App\Models\BranchOffice;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -119,12 +120,30 @@ class ClientController extends Controller
             'shipping_notes' => $request->shipping_notes, // Si vas a cambiar a 'shipping_instructions
             'address' => $request->address, // Si vas a cambiar a 'location'
         ]);
+
+
+        
+       
+
         
    
         if ($request->input('action') === 'create_client_and_branch') {
-            return redirect()->route('admin.branch_offices.create', ['clientId' => $client->id])
-                             ->with('success', 'Cliente creado exitosamente. Ahora puedes agregar una sucursal.');
+            BranchOffice::create([
+                'name' => $request->client_name. " ".$request->registration_city,
+                'nit' => $request->nit,
+                'client_id' => $client->id,
+                'contact' => " ",
+                'billing_contact' => " ",
+                'delivery_address' => " ",
+                'delivery_city' => $request->registration_city,
+                'billing_city' => " ",
+                'phone' => " ",
+                'shipping_observations' => " ",
+                'general_observations' => " ",
+            ]);
         }
+
+
 
         return redirect()->route('admin.client.index')
             ->with('message', 'Cliente y usuario creados exitosamente.');
