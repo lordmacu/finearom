@@ -12,6 +12,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -23,6 +26,7 @@ const app = createApp({});
 // Use the VueSweetalert2 plugin
 app.use(VueSweetalert2);
 app.use(LoadingPlugin);
+app.component('VueDatePicker', VueDatePicker);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import PurchaseOrderForm from './components/PurchaseOrderForm.vue';

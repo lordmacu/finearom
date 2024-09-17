@@ -59,6 +59,8 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
+
+
         $request->validate([
             'client_name' => 'required|string|max:255',
             'client_type' => 'required|in:pareto,balance',
@@ -119,6 +121,10 @@ class ClientController extends Controller
         ]);
         
    
+        if ($request->input('action') === 'create_client_and_branch') {
+            return redirect()->route('admin.branch_offices.create', ['clientId' => $client->id])
+                             ->with('success', 'Cliente creado exitosamente. Ahora puedes agregar una sucursal.');
+        }
 
         return redirect()->route('admin.client.index')
             ->with('message', 'Cliente y usuario creados exitosamente.');
@@ -166,6 +172,12 @@ class ClientController extends Controller
 
         return redirect()->route('admin.client.index')
             ->with('message', 'Cliente eliminado exitosamente.');
+    }
+
+    
+    public function show(Client $client)
+    {
+        return $client;
     }
 
     public function import(Request $request)

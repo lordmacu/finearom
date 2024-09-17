@@ -11,6 +11,11 @@
         </x-admin.breadcrumb>
         <x-admin.form.errors />
     </div>
+    <div class="flex justify-end mb-4">
+        <a href="{{ route('admin.branch_offices.index', $client->id) }}" class="btn btn-secondary">
+            Agregar sucursal
+        </a>
+    </div>
     <div class="w-full py-2 overflow-hidden cont-form">
         <form method="POST" action="{{ route('admin.client.update', $client->id) }}">
             @csrf

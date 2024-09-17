@@ -20,8 +20,7 @@
                                         <label :class="errors.order_consecutive ? 'text-red-500' : ''">
                                             Consecutivo de la Orden
                                         </label>
-                                        <input v-model="orderConsecutive" type="text"
-                                            :disabled="purchaseOrder === null"
+                                        <input v-model="orderConsecutive" type="text" :disabled="purchaseOrder === null"
                                             :class="[errors.order_consecutive ? 'border-red-500' : 'border-gray-300', 'rounded', 'px-2', 'ml-2']" />
                                     </div>
                                 </div>
@@ -30,7 +29,10 @@
                                         <label :class="errors.required_delivery_date ? 'text-red-500' : ''">
                                             Fecha de Entrega Requerida
                                         </label>
-                                        <input v-model="requiredDeliveryDate" type="date" :min="minDeliveryDate"
+
+
+                                        <VueDatePicker v-model="requiredDeliveryDate" model-type="dd-MM-yyyy"
+                                            :enable-time-picker="false"
                                             :class="[errors.required_delivery_date ? 'border-red-500' : 'border-gray-300', 'rounded', 'px-2']" />
 
                                     </div>
@@ -174,7 +176,7 @@
                                 <div class="bg-white rounded-lg w-3/5">
                                     <div class="text-lg font-bold">Total parcial: <span>{{ subtotal.toFixed(2) }}</span>
                                         USD</div>
-                                  <!--  <div>Iva: <span>{{ iva.toFixed(2) }}</span> USD</div>
+                                    <!--  <div>Iva: <span>{{ iva.toFixed(2) }}</span> USD</div>
                                     <div>ReteICA: <span>{{ reteica.toFixed(2) }}</span> USD</div> -->
                                     <div>
                                         <span class="text-lg font-bold">Total: <span>{{ total.toFixed(2) }}</span>
@@ -272,7 +274,7 @@
             attachment: null,
             attachmentUrl: this.purchaseOrder?.attachment ? `/storage/${this.purchaseOrder.attachment}` : null,
             errors: {},
-            trmInitial:0
+            trmInitial: 0
 
         };
     },
@@ -354,6 +356,7 @@
             this.clearAllFields();
             this.fetchClientBranchOffices(this.clientId);
             this.fetchClientProducts(this.clientId);
+            this.fetchClient(this.clientId);
         },
         fetchClientBranchOffices(clientId) {
             let loader = this.$loading.show({
@@ -378,6 +381,27 @@
             axios.get(`/admin/purchase_orders/getClientProducts/${clientId}`)
                 .then(response => {
                     this.availableProducts = response.data;
+                    loader.hide();
+
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                    loader.hide();
+
+                });
+        },
+        fetchClient(clientId) {
+
+            let loader = this.$loading.show({
+                container: this.fullPage ? null : this.$refs.formContainer,
+            });
+            axios.get(`/admin/client/${clientId}`)
+                .then(response => {
+                    // this.availableProducts = response.data;
+                    var data= response.data;
+                    this.phone = data.phone;
+                    this.contact=data.accounting_contact
+                    this.observations =commercial_terms
                     loader.hide();
 
                 })
@@ -418,10 +442,10 @@
         async submitForm() {
             if (this.validateForm()) {
                 let formData = new FormData();
-                
+
                 let loader = this.$loading.show({
-                container: this.fullPage ? null : this.$refs.formContainer,
-            });
+                    container: this.fullPage ? null : this.$refs.formContainer,
+                });
 
                 formData.append('order_consecutive', this.orderConsecutive);
                 formData.append('required_delivery_date', this.requiredDeliveryDate);
@@ -483,7 +507,7 @@
                     }
                 }
 
-            loader.hide();
+                loader.hide();
             }
         },
 

@@ -151,6 +151,9 @@
             <div class="flex justify-end mt-4">
                 <x-admin.form.button>{{ __('Crear') }}</x-admin.form.button>
             </div>
+            <div class="flex justify-end mt-4">
+                <x-admin.form.button type="submit" name="action" value="create_client_and_branch">{{ __('Guardar y crear sucursal') }}</x-admin.form.button>
+            </div>
         </form>
     </div>
 </x-admin.wrapper>
