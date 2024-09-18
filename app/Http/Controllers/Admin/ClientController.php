@@ -78,6 +78,8 @@ class ClientController extends Controller
             'commercial_terms' => 'nullable|string|max:255',
             'executive'=> 'nullable|string|email|max:255',
             'address' => 'nullable|string|max:255',
+            'trm' => 'nullable|string|max:255',
+
         ]);
 
         $user = User::create([
@@ -108,7 +110,7 @@ class ClientController extends Controller
             'registration_address' => $request->registration_address,
             'registration_city' => $request->registration_city,
             'commercial_terms' => $request->commercial_terms, // Usa este campo si 'commercial_conditions' ha sido renombrado.
-            'trm' => " ",
+            'trm' => $request->trm,
             'executive' => $request->executive, // Usa este campo si 'executive_email' ha sido renombrado.
             'shipping_notes' => " ", // Si vas a cambiar a 'shipping_instructions
             'address' => $request->address, // Si vas a cambiar a 'location'
@@ -159,6 +161,8 @@ class ClientController extends Controller
             'registration_address' => 'nullable|string|max:255',
             'registration_city' =>'nullable|string|max:255',
             'commercial_terms' => 'nullable|string|max:255',
+            'trm' => 'nullable|string|max:255',
+
         ]);
 
         $client->update($request->all());

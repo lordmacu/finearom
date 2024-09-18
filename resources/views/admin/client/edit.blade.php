@@ -116,6 +116,10 @@
                     </select>
                 </div>
             </div>
+            <div class="py-2">
+                <x-admin.form.label for="trm" class="{{ $errors->has('trm') ? 'text-red-400' : '' }}">{{ __('TRM') }}</x-admin.form.label>
+                <x-admin.form.input id="trm" class="{{ $errors->has('trm') ? 'border-red-400' : '' }}" type="text" name="trm" value="{{ old('trm', $client->trm) }}" />
+            </div>
 
             <div class="py-2">
                 <x-admin.form.label for="commercial_terms" class="{{ $errors->has('commercial_terms') ? 'text-red-400' : '' }}">{{ __('Condiciones Comerciales') }}</x-admin.form.label>

@@ -109,6 +109,11 @@
             </div>
 
             <div class="py-2">
+                <x-admin.form.label for="trm" class="{{ $errors->has('trm') ? 'text-red-400' : '' }}">{{ __('TRM') }}</x-admin.form.label>
+                <x-admin.form.input id="trm" class="{{ $errors->has('trm') ? 'border-red-400' : '' }}" type="text" name="trm" value="{{ old('trm') }}" />
+            </div>
+
+            <div class="py-2">
                 <x-admin.form.label for="commercial_terms" class="{{ $errors->has('commercial_terms') ? 'text-red-400' : '' }}">{{ __('Condiciones Comerciales') }}</x-admin.form.label>
                 <textarea id="commercial_terms" name="commercial_terms" class="input input-bordered w-full {{ $errors->has('commercial_terms') ? 'border-red-400' : '' }}">{{ old('commercial_terms') }}</textarea>
             </div>
