@@ -401,7 +401,7 @@
                     var data= response.data;
                     this.phone = data.phone;
                     this.contact=data.accounting_contact
-                    this.observations =commercial_terms
+                    this.observations =data.commercial_terms
                     loader.hide();
 
                 })

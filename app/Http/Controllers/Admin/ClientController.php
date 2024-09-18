@@ -66,24 +66,17 @@ class ClientController extends Controller
             'client_name' => 'required|string|max:255',
             'client_type' => 'required|in:pareto,balance',
             'email' => 'required|email|unique:clients,email|unique:users,email',
-            'billing_closure' => 'required|string|max:255',
-            'commercial_conditions' => 'nullable|string',
             'proforma_invoice' => 'required|boolean',
             'payment_method' => 'required|in:1,2',
             'payment_day' => 'required|integer',
             'status' => 'required|in:active,inactive',
             'nit' => 'nullable|string|max:255',
-            'executive_email' => 'nullable|string|email|max:255',
-            'dispatch_confirmation_contact' => 'required|string|max:255',
-            'accounting_contact' => 'nullable|string|max:255',
             'dispatch_confirmation_email' => 'required|string|email|max:255',
             'accounting_contact_email' => 'nullable|string|email|max:255',
             'registration_address' => 'nullable|string|max:255',
             'registration_city' => 'nullable|string|max:255',
             'commercial_terms' => 'nullable|string|max:255',
-            'trm' => 'nullable|string|max:255',
-            'executive'=> 'nullable|string|max:255',
-            'shipping_notes' => 'nullable|string|max:255', // Si vas a cambiar a
+            'executive'=> 'nullable|string|email|max:255',
             'address' => 'nullable|string|max:255',
         ]);
 
@@ -100,32 +93,26 @@ class ClientController extends Controller
             'client_type' => $request->client_type,
             'user_id' => $user->id,
             'email' => $request->email,
-            'billing_closure' => $request->billing_closure,
-            'commercial_conditions' => $request->commercial_conditions, // Si vas a cambiar a 'commercial_terms', cambia este campo también.
+            'billing_closure' => " ",
+            'commercial_conditions' =>" ", // Si vas a cambiar a 'commercial_terms', cambia este campo también.
             'proforma_invoice' => $request->proforma_invoice,
             'payment_method' => $request->payment_method,
             'payment_day' => $request->payment_day,
             'status' => $request->status,
             'nit' => $request->nit,
-            'executive_email' => $request->executive_email,
-            'dispatch_confirmation_contact' => $request->dispatch_confirmation_contact,
-            'accounting_contact' => $request->accounting_contact,
+            'executive_email' => " ",
+            'dispatch_confirmation_contact' => " ",
+            'accounting_contact' => " ",
             'dispatch_confirmation_email' => $request->dispatch_confirmation_email,
             'accounting_contact_email' => $request->accounting_contact_email,
             'registration_address' => $request->registration_address,
             'registration_city' => $request->registration_city,
             'commercial_terms' => $request->commercial_terms, // Usa este campo si 'commercial_conditions' ha sido renombrado.
-            'trm' => $request->trm,
+            'trm' => " ",
             'executive' => $request->executive, // Usa este campo si 'executive_email' ha sido renombrado.
-            'shipping_notes' => $request->shipping_notes, // Si vas a cambiar a 'shipping_instructions
+            'shipping_notes' => " ", // Si vas a cambiar a 'shipping_instructions
             'address' => $request->address, // Si vas a cambiar a 'location'
         ]);
-
-
-        
-       
-
-        
    
         if ($request->input('action') === 'create_client_and_branch') {
             BranchOffice::create([
@@ -161,22 +148,17 @@ class ClientController extends Controller
             'client_name' => 'required|string|max:255',
             'client_type' => 'required|in:pareto,balance',
             'email' => 'required|string|email|max:255|unique:clients,email,' . $client->id,
-            'billing_closure' => 'required|string|max:255',
-            'commercial_conditions' => 'nullable|string',
             'proforma_invoice' => 'required|boolean',
             'payment_method' => 'required|in:1,2',
             'payment_day' => 'required|integer',
             'status' => 'required|in:active,inactive',
             'nit' => 'nullable|string|max:255',
-            'executive_email' => 'nullable|string|email|max:255',
-            'dispatch_confirmation_contact' => 'required|string|max:255',
-            'accounting_contact'=> 'nullable|string|max:255',
+            'executive' => 'nullable|string|email|max:255',
             'dispatch_confirmation_email' =>'required|string|email|max:255',
             'accounting_contact_email' => 'nullable|string|email|max:255',
             'registration_address' => 'nullable|string|max:255',
             'registration_city' =>'nullable|string|max:255',
             'commercial_terms' => 'nullable|string|max:255',
-            'trm'=> 'nullable|string|max:255',
         ]);
 
         $client->update($request->all());
