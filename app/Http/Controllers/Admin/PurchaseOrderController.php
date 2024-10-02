@@ -184,7 +184,7 @@ class PurchaseOrderController extends Controller
                 'trm' => 'required',
                 'observations' => 'nullable|string',
                 'contact' => 'required|string|max:255',
-                'phone' => 'required|string|max:15',
+                'phone' => 'required|string',
                 'status' => 'required|in:pending,processing,completed,cancelled',
                 'products' => 'required|array',
                 'products.*.product_id' => 'required|exists:products,id',
@@ -194,6 +194,7 @@ class PurchaseOrderController extends Controller
             ]);
 
             $currentDate = Carbon::now()->format('Y-m-d');
+            $formattedDeliveryDate = Carbon::createFromFormat('d-m-Y', $request->required_delivery_date)->format('Y-m-d');
 
             $purchaseOrderData = $request->only(
                 'client_id',
@@ -206,6 +207,9 @@ class PurchaseOrderController extends Controller
                 'status',
                 'trm'
             );
+
+            $purchaseOrderData['required_delivery_date'] = $formattedDeliveryDate; // Update formatted delivery date
+
 
             $filePath = null;  // Initialize the filePath as null
 
