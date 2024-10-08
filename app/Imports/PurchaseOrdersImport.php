@@ -53,6 +53,8 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
             Log::warning('Productos no encontrados durante la importación: ' . implode(', ', $this->missingProducts));
         }
 
+        echo '<a href="/admin/purchase_orders">volver a la página anterior</a>';
+
         // Mostrar las órdenes creadas y sus productos en formato de tabla
         echo "<table border='1' style='border-collapse: collapse;'>";
         echo "<tr><th>Orden de Compra</th><th>Cliente ID</th><th>Fecha de Entrega</th><th>Productos</th><th>Productos Creados</th><th>Acción</th></tr>";
