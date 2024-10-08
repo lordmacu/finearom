@@ -27,11 +27,11 @@
                                 <div>
                                     <div>
                                         <label :class="errors.required_delivery_date ? 'text-red-500' : ''">
-                                            Fecha de Entrega Requerida
+                                            Fecha de Entrega Requerida 
                                         </label>
 
 
-                                        <VueDatePicker v-model="requiredDeliveryDate" model-type="dd-MM-yyyy"
+                                        <VueDatePicker v-model="requiredDeliveryDate" model-type="yyyy-MM-dd"
                                             :enable-time-picker="false"
                                             :class="[errors.required_delivery_date ? 'border-red-500' : 'border-gray-300', 'rounded', 'px-2']" />
 
@@ -547,6 +547,7 @@
         this.trmCalculated = Math.round(1 / this.exchange);
 
         if (this.purchaseOrder) {
+
             this.orderConsecutive = this.purchaseOrder.order_consecutive;
             this.requiredDeliveryDate = this.purchaseOrder.required_delivery_date;
             this.clientId = this.purchaseOrder.client_id;

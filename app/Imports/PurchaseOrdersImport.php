@@ -98,7 +98,7 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
                 return \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value)->format($format);
             } else {
                 // Intentar parsear la cadena utilizando Carbon
-                return Carbon::createFromFormat('d/m/Y', $value)->format($format);
+                return Carbon::createFromFormat('Y-m-d', $value)->format($format);
             }
         } catch (\Exception $e) {
             dd($e);
