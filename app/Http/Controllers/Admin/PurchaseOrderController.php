@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PurchaseOrdersImport;
 use App\Mail\PurchaseOrderMail;
 use App\Mail\PurchaseOrderStatusChangedMail;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
+
+use Maatwebsite\Excel\Facades\Excel;
+
 
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
@@ -173,6 +177,14 @@ class PurchaseOrderController extends Controller
                 'error' => 'Failed to delete attachment: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function import(Request $request){
+        $request->validate([
+            'excel_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        Excel::import(new PurchaseOrdersImport, $request->file('excel_file'));
     }
 
     public function store(Request $request)

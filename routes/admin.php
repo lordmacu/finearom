@@ -84,6 +84,7 @@ Route::group([
     // Purchase Order routes
     Route::resource('purchase_orders', PurchaseOrderController::class);
     Route::post('purchase_orders/store', [PurchaseOrderController::class, 'store'])->name('purchase_orders.store');
+    Route::post('purchase_orders/import', [PurchaseOrderController::class, 'import'])->name('purchase_orders.import');
     Route::post('purchase_orders/{id}/update', [PurchaseOrderController::class, 'update'])->name('purchase_orders.update');
     Route::put('purchase_orders/{id}/update-status', [PurchaseOrderController::class, 'updateStatus'])->name('purchase_orders.updateStatus');
     Route::get('purchase_orders/getClientBranchOffices/{clientId}', [PurchaseOrderController::class, 'getClientBranchOffices']);

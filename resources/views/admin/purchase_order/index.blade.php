@@ -7,6 +7,14 @@
         <x-admin.add-link href="{{ route('admin.purchase_orders.create') }}">
             {{ __('Agregar orden de compra') }}
         </x-admin.add-link>
+
+        <form id="importExcelForm" action="{{ route('admin.purchase_orders.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="excel_file" id="excel_file" accept=".xls,.xlsx" style="display: none;" onchange="document.getElementById('importExcelForm').submit();">
+            <button type="button" onclick="document.getElementById('excel_file').click();" class="btn btn-primary">
+                {{ __('Importar Excel') }}
+            </button>
+        </form>
     @endcan
 
     <div class="py-2">
