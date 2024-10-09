@@ -154,6 +154,7 @@
                                 {{ number_format($total, 2, ',', '.') }}
                             </td>
                             <td>
+                                @can('order_change_status')
                                 <div class="flex items-center">
                                     <span class="status-indicator {{ $purchaseOrder->status }}"></span>
                                     <select style="width: 100px" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -165,8 +166,11 @@
                                         <option value="cancelled" {{ $purchaseOrder->status == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelado') }}</option>
                                     </select>
                                 </div>
+                                @endcan
                             </td>
                             <td class="icon-btn">
+                                @can('order_observation')
+
                                 <a href="#"
                                 onclick="openObservationsModal(
                                     {{ $purchaseOrder->id }},
@@ -183,6 +187,9 @@
                                            d="M8 10h.01M12 10h.01M16 10h.01M21 14a2 2 0 01-2 2H7l-4 4V6a2 2 0 012-2h12a2 2 0 012 2v8z"/>
                                  </svg>
                              </a>
+                             @endcan
+
+                             @can('purchase_order edit')
                                 <a href="{{ route('admin.purchase_orders.edit', $purchaseOrder->id) }}">
                                     <svg style="color: #e3ba41;" class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z"></path>
@@ -191,18 +198,25 @@
                                         <line x1="16" y1="5" x2="19" y2="8"></line>
                                     </svg>
                                 </a>
+                                @endCan
+                                @can('purchase_order show')
+
                                 <a href="{{ route('admin.purchase-order.pdf', $purchaseOrder->id) }}" target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-gray-500">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v4h16v-4M12 4v12m0 0l-4-4m4 4l4-4" />
                                     </svg>
                                 </a>
-                                
+                                @endCan
+                                @can('purchase_order delete')
+
                                 <button type="button" onclick="confirmDelete('{{ route('admin.purchase_orders.destroy', $purchaseOrder->id) }}')">
                                     <svg style="width: 24px; margin-top: 3px; color: #bd7676;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0">
                                         </path>
                                     </svg>
-                                </button>                                
+                                </button> 
+                                @endCan
+                               
                             </td>
                         </tr>
                     @empty

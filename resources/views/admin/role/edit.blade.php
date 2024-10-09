@@ -27,7 +27,6 @@
                                 />
             </div>
 
-            @unless ($role->name == env('APP_SUPER_ADMIN', 'super-admin'))
             <div class="py-2">
                 <h3 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight py-4 block sm:inline-block flex">Permisos</h3>
                 <div class="grid grid-cols-4 gap-4">
@@ -43,7 +42,6 @@
                     @endforelse
                 </div>
             </div>
-            @endunless
 
             <div class="flex justify-end mt-4">
                 <x-admin.form.button>{{ __('Actualizar') }}</x-admin.form.button>

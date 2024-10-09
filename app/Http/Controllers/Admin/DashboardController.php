@@ -15,6 +15,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->hasRole('Gerente')) {
+            return redirect()->route('admin.purchase_orders.index');
+        }
+
         $startOfMonth = Carbon::now()->startOfMonth();
         $endOfMonth = Carbon::now()->endOfMonth();
         $query = PurchaseOrder::query();

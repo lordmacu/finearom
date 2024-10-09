@@ -41,6 +41,7 @@ class BranchOfficeController extends Controller
             'shipping_observations' => 'nullable|string',
             'general_observations' => 'nullable|string',
         ]);
+       // dd($request->all());
 
         BranchOffice::create([
             'name' => $request->name,
@@ -48,9 +49,8 @@ class BranchOfficeController extends Controller
             'client_id' => $clientId,
             'contact' => " ",
             'billing_contact' => " ",
-            'delivery_address' => " ",
+            'delivery_address' => $request->delivery_address,
             'delivery_city' => $request->delivery_city,
-            'billing_address' => $request->billing_address,
             'billing_city' => " ",
             'phone' => " ",
             'shipping_observations' => $request->shipping_observations,
