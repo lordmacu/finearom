@@ -84,7 +84,12 @@
                                 </div>
                             </label>
                             <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-
+                                <li class="justify-between">
+                                    <a href="{{ route('profile.edit') }}">
+                                        {{ __('Perfil') }}
+                                    </a>
+                                </li>
+                                <div class="divider mt-0 mb-0"></div>
                                 <li>
                                     <!-- Authentication -->
                                     <form method="POST" action="{{ route('logout') }}">

@@ -82,6 +82,11 @@
                 <ul tabindex="0"
                     class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                     <li>
+                        <a href="{{ route('profile.edit') }}" class="justify-between">
+                            {{ __('Perfil') }}
+                        </a>
+                    </li>
+                    <li>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
