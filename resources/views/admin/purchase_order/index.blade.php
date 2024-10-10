@@ -209,7 +209,6 @@
                              </a>
                              @endcan
 
-                             @can('purchase_order edit')
                                 <a href="{{ route('admin.purchase_orders.edit', $purchaseOrder->id) }}">
                                     <svg style="color: #e3ba41;" class="h-8 w-8 text-blue-500" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z"></path>
@@ -218,7 +217,7 @@
                                         <line x1="16" y1="5" x2="19" y2="8"></line>
                                     </svg>
                                 </a>
-                                @endCan
+
                                 @can('purchase_order show')
 
                                 <a href="{{ route('admin.purchase-order.pdf', $purchaseOrder->id) }}" target="_blank">
