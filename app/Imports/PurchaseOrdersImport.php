@@ -126,6 +126,22 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
             $action = 'Modificado';
         }
 
+        $status=$firstRow['estado'];
+        $statusDb="processing";
+
+        if($status == 'cancelado'){
+            $statusDb = "cancelled";
+        }
+        
+        if($status == 'completado'){
+            $statusDb = "completed";
+        }
+        
+        if($status == 'pendiente'){
+            $statusDb = "pending";
+        }
+        
+        //'pending','processing','completed','cancelled','parcial_status'
         // Crear una nueva orden de compra
         $purchaseOrderData = [
             'client_id' => $client_id,
@@ -133,7 +149,7 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
             'observations' => $firstRow['observaciones'] ?? null,
             'contact' => $client->accounting_contact,
             'phone' => $client->phone,
-            'status' => 'processing',
+            'status' => $statusDb,
             'trm' => $firstRow['trm'] ,
             'order_creation_date' => $orderCreation,
             'order_consecutive' => $firstRow['orden_de_compra'],
