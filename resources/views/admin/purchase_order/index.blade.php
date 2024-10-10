@@ -167,10 +167,25 @@
                                     </select>
                                 </div>
                                 @else
+                                
                                 <div class="flex items-center">
                                     <span class="status-indicator {{ $purchaseOrder->status }}"></span>
-                                    <span class="ml-2">{{$purchaseOrder->status }}</span>
-                                </div>
+                                    <span class="ml-2">
+                                        @if ($purchaseOrder->status == 'pending')
+                                            {{ __('Pendiente') }}
+                                        @elseif ($purchaseOrder->status == 'processing')
+                                            {{ __('En Proceso') }}
+                                        @elseif ($purchaseOrder->status == 'completed')
+                                            {{ __('Completado') }}
+                                        @elseif ($purchaseOrder->status == 'parcial_status')
+                                            {{ __('Parcial') }}
+                                        @elseif ($purchaseOrder->status == 'cancelled')
+                                            {{ __('Cancelado') }}
+                                        @else
+                                            {{ __('Desconocido') }}
+                                        @endif
+                                    </span>
+                                </div>                                
                                 @endcan
                             </td>
                             <td class="icon-btn">
