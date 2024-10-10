@@ -25,6 +25,7 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
     {
         dispatch_sync(new BackupDatabaseJob()); // Despachar el Job sincrónicamente
         // Validar que todas las columnas requeridas estén presentes
+
         $missingColumns = array_diff($this->requiredColumns, array_keys($rows->first()->toArray()));
         if (!empty($missingColumns)) {
             echo "<p style='color:red;'>Faltan las siguientes columnas importantes en el Excel: " . implode(', ', $missingColumns) . "</p>";
@@ -110,14 +111,14 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
     private function createOrUpdatePurchaseOrder(Collection $orderRows, $orderConsecutive)
     {
         $firstRow = $orderRows->first()->toArray();
-        $client = Client::where('nit', $firstRow['nit'])->first();
+        $client = Client::where('nit', trim($firstRow['nit']))->first();
         $client_id = $client->id;
 
-        $formattedDeliveryDate = $this->transformDate($firstRow['fecha_de_despacho']);
-        $orderCreation = $this->transformDate($firstRow['fecha_de_solicitud']);
+        $formattedDeliveryDate = $this->transformDate(trim($firstRow['fecha_de_despacho']));
+        $orderCreation = $this->transformDate(trim($firstRow['fecha_de_solicitud']));
 
         // Buscar si ya existe una orden de compra con el mismo consecutivo interno y orden de compra (usando LIKE)
-        $existingOrder = PurchaseOrder::where('order_consecutive', 'like', '%' . $firstRow['orden_de_compra'])->first();
+        $existingOrder = PurchaseOrder::where('order_consecutive', 'like', '%' . trim($firstRow['orden_de_compra']))->first();
         $action = 'Creado';
         if ($existingOrder) {
             // Eliminar la orden de compra existente
@@ -126,7 +127,8 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
             $action = 'Modificado';
         }
 
-        $status=$firstRow['estado'];
+        $status=trim($firstRow['estado']);
+        dd($status);
         $statusDb="processing";
 
         if($status == 'cancelado'){
@@ -146,13 +148,13 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
         $purchaseOrderData = [
             'client_id' => $client_id,
             'required_delivery_date' => $formattedDeliveryDate,
-            'observations' => $firstRow['observaciones'] ?? null,
+            'observations' => trim($firstRow['observaciones']) ?? null,
             'contact' => $client->accounting_contact,
             'phone' => $client->phone,
             'status' => $statusDb,
-            'trm' => $firstRow['trm'] ,
+            'trm' => trim($firstRow['trm']) ,
             'order_creation_date' => $orderCreation,
-            'order_consecutive' => $firstRow['orden_de_compra'],
+            'order_consecutive' => trim($firstRow['orden_de_compra']),
         ];
   
         $purchaseOrder = PurchaseOrder::create($purchaseOrderData);

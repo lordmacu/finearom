@@ -443,14 +443,24 @@ class PurchaseOrderController extends Controller
         $clientEmail = $purchaseOrder->client->email;
      //   $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
 
-        $ccEmailsString = implode(',', $ccEmails);
+        $ccEmailsString = implode(', ', $ccEmails);
         $executiveEmail = $purchaseOrder->client->executive_email;
 
-        $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
+        $ccEmailsString = $executiveEmail . ', ' . $ccEmailsString;
+        $ccAddresses = array_map(function($email) {
+            return new Address($email);
+        }, $ccEmails); 
+        
+        // Si el correo del ejecutivo es válido, añadirlo al array
+        if (filter_var($executiveEmail, FILTER_VALIDATE_EMAIL)) {
+            array_unshift($ccAddresses, new Address($executiveEmail)); // Añadir al inicio del array
+        }
+        
+        
 
         $email = (new Email())
             ->from($fromEmail)
-            ->cc($ccEmailsString)
+            ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
             ->to($clientEmail)
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_status_changed_plain', ['purchaseOrder' => $purchaseOrder])->render());
@@ -461,7 +471,7 @@ class PurchaseOrderController extends Controller
         }
 
         // Enviar el mensaje
-        $mailer->send($email);
+    //    $mailer->send($email);
     }
 
     public function update(Request $request, $purchaseOrderId)
