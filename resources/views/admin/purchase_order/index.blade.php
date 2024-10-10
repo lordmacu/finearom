@@ -166,6 +166,11 @@
                                         <option value="cancelled" {{ $purchaseOrder->status == 'cancelled' ? 'selected' : '' }}>{{ __('Cancelado') }}</option>
                                     </select>
                                 </div>
+                                @else
+                                <div class="flex items-center">
+                                    <span class="status-indicator {{ $purchaseOrder->status }}"></span>
+                                    <span class="ml-2">{{ __($purchaseOrder->status) }}</span>
+                                </div>
                                 @endcan
                             </td>
                             <td class="icon-btn">
