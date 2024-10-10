@@ -128,7 +128,7 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
         }
 
         $status=trim($firstRow['estado']);
-        dd($status);
+
         $statusDb="processing";
 
         if($status == 'cancelado'){
