@@ -156,7 +156,11 @@ class PurchaseOrdersImport implements ToCollection, WithHeadingRow
         ];
   
         $purchaseOrder = PurchaseOrder::create($purchaseOrderData);
-        $purchaseOrder->order_consecutive = $purchaseOrder->id . '-' . $purchaseOrder->order_consecutive;
+        $purchaseOrder->order_consecutive = $purchaseOrder->order_consecutive;
+
+        if(!$purchaseOrder->order_consecutive){
+            $purchaseOrder->order_consecutive = $purchaseOrder->id . '-' . $purchaseOrder->order_consecutive;
+        }
 
         $products = [];
         $missingProducts = [];
