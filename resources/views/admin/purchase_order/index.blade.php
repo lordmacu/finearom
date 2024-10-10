@@ -218,6 +218,8 @@
                                     </svg>
                                 </a>
 
+                                
+
                                 @can('purchase_order show')
 
                                 <a href="{{ route('admin.purchase-order.pdf', $purchaseOrder->id) }}" target="_blank">
