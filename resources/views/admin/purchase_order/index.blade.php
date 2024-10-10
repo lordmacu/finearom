@@ -169,7 +169,7 @@
                                 @else
                                 <div class="flex items-center">
                                     <span class="status-indicator {{ $purchaseOrder->status }}"></span>
-                                    <span class="ml-2">{{ __($purchaseOrder->status) }}</span>
+                                    <span class="ml-2">{{$purchaseOrder->status }}</span>
                                 </div>
                                 @endcan
                             </td>
