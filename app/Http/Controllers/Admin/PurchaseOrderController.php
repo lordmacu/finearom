@@ -264,18 +264,18 @@ class PurchaseOrderController extends Controller
             
             $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
-           /* Mail::to(explode(',', $clientEmail))
+            Mail::to(explode(',', $clientEmail))
                 ->cc($ccEmails)
-                ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));*/
+                ->send(new PurchaseOrderMail($purchaseOrder, $pdfContent));
 
             $ccEmails = Process::where('process_type', 'orden_de_compra')
                 ->pluck('email')
                 ->toArray();
             $ccEmails = array_merge($ccEmails, [$executiveEmail, $coordinator]);
 
-           /* Mail::to(explode(',', $executiveEmail))
+            Mail::to(explode(',', $executiveEmail))
                 ->cc($ccEmails)
-                ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));*/
+                ->send(new PurchaseOrderMailDespacho($purchaseOrder, $filePath));
 
             return response()->json([
                 'message' => 'Purchase Order created successfully.',
@@ -411,10 +411,20 @@ class PurchaseOrderController extends Controller
 
         $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
 
+
+        $ccEmailsString = $executiveEmail . ', ' . $ccEmailsString;
+        $ccAddresses = array_map(function($email) {
+            return new Address($email);
+        }, $ccEmails); 
+        
+        if (filter_var($executiveEmail, FILTER_VALIDATE_EMAIL)) {
+            array_unshift($ccAddresses, new Address($executiveEmail)); // Añadir al inicio del array
+        }
+
         $email = (new Email())
             ->from($fromEmail)
             ->to($clientEmail)
-            ->cc($ccEmailsString)
+            ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_email_complete_partial', ['purchaseOrder' => $purchaseOrder])->render());
 
@@ -423,7 +433,7 @@ class PurchaseOrderController extends Controller
             $email->getHeaders()->addTextHeader('References', '<' . $purchaseOrder->message_id . '>');
         }
 
-      //  $mailer->send($email);
+       $mailer->send($email);
     }
 
 
@@ -451,7 +461,6 @@ class PurchaseOrderController extends Controller
             return new Address($email);
         }, $ccEmails); 
         
-        // Si el correo del ejecutivo es válido, añadirlo al array
         if (filter_var($executiveEmail, FILTER_VALIDATE_EMAIL)) {
             array_unshift($ccAddresses, new Address($executiveEmail)); // Añadir al inicio del array
         }
@@ -471,7 +480,7 @@ class PurchaseOrderController extends Controller
         }
 
         // Enviar el mensaje
-    //    $mailer->send($email);
+        $mailer->send($email);
     }
 
     public function update(Request $request, $purchaseOrderId)
