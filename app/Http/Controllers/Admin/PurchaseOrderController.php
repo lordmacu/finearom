@@ -390,7 +390,7 @@ class PurchaseOrderController extends Controller
 
     public function sendStatusChangedEmailsCompleteAndPartial(PurchaseOrder $purchaseOrder)
     {
-        $clientEmail = $purchaseOrder->client->email;
+
         //$clientEmail = 'yocristiangarciaco@gmail.com'; //demo
 
         // Recuperar el `message_id` desde el storage
@@ -423,7 +423,7 @@ class PurchaseOrderController extends Controller
 
         $email = (new Email())
             ->from($fromEmail)
-            ->to($clientEmail)
+            ->to($executiveEmail)
             ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_email_complete_partial', ['purchaseOrder' => $purchaseOrder])->render());
@@ -450,8 +450,8 @@ class PurchaseOrderController extends Controller
         $ccEmails = Process::where('process_type', 'pedido')
             ->pluck('email')
             ->toArray();
-        $clientEmail = $purchaseOrder->client->email;
-     //   $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
+
+            //   $clientEmail = 'yocristiangarciaco@gmail.com'; //demo
 
         $ccEmailsString = implode(', ', $ccEmails);
         $executiveEmail = $purchaseOrder->client->executive_email;
@@ -470,7 +470,7 @@ class PurchaseOrderController extends Controller
         $email = (new Email())
             ->from($fromEmail)
             ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
-            ->to($clientEmail)
+            ->to($executiveEmail)
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_status_changed_plain', ['purchaseOrder' => $purchaseOrder])->render());
 
