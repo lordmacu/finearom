@@ -67,7 +67,7 @@
             <h1>Estado de la Orden de Compra Actualizado</h1>
         </div>
         <div class="content">
-            <p>Hola {{ $purchaseOrder->client->client_name }},</p>
+
             <p>El estado de su orden de compra con el consecutivo <strong>{{ $purchaseOrder->order_consecutive }}</strong> ha sido actualizado a <strong>
             @php
                 $statusTranslations = [

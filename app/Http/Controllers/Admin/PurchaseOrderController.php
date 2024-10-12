@@ -422,7 +422,7 @@ class PurchaseOrderController extends Controller
             ->to($executiveEmail)
             ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
-            ->text($text); // Enviar el correo como texto plano
+            ->text("La orden de compra con consecutivo ".$purchaseOrder->order_consecutive." tiene los siguientes comentarios <br>".$text); // Enviar el correo como texto plano
 
         if ($messageId) {
             $email->getHeaders()->addTextHeader('In-Reply-To', '<' . $purchaseOrder->message_id . '>');
