@@ -383,8 +383,53 @@ class PurchaseOrderController extends Controller
         $purchaseOrder->observations_extra = $observationEntry . $currentObservations;
     
         $purchaseOrder->save();
+
+        $this->sendPlainEmailToPurchaseOrder($purchaseOrder, $observationEntry);
     
         return redirect()->back()->with('success', 'Observación agregada exitosamente.');
+    }
+
+    public function sendPlainEmailToPurchaseOrder($purchaseOrder, $text){
+        $messageId = $purchaseOrder->message_id;
+
+        $transport = Transport::fromDsn(env('MAILER_DSN'));
+        $mailer = new Mailer($transport);
+
+        $ccEmails = Process::where('process_type', 'pedido')
+            ->pluck('email')
+            ->toArray();
+
+        $ccEmailsString = implode(',', $ccEmails);
+
+        $fromEmail = env('MAIL_USERNAME_FACTURACION');
+
+        $executiveEmail = $purchaseOrder->client->executive_email;
+
+        $ccEmailsString = $executiveEmail . ',' . $ccEmailsString;
+
+
+        $ccEmailsString = $executiveEmail . ', ' . $ccEmailsString;
+        $ccAddresses = array_map(function($email) {
+            return new Address($email);
+        }, $ccEmails); 
+        
+        if (filter_var($executiveEmail, FILTER_VALIDATE_EMAIL)) {
+            array_unshift($ccAddresses, new Address($executiveEmail)); // Añadir al inicio del array
+        }
+
+        $email = (new Email())
+            ->from($fromEmail)
+            ->to($executiveEmail)
+            ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
+            ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
+            ->text($text); // Enviar el correo como texto plano
+
+        if ($messageId) {
+            $email->getHeaders()->addTextHeader('In-Reply-To', '<' . $purchaseOrder->message_id . '>');
+            $email->getHeaders()->addTextHeader('References', '<' . $purchaseOrder->message_id . '>');
+        }
+
+       $mailer->send($email);
     }
     
 

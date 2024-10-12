@@ -32,6 +32,7 @@ Route::group([
     Route::post('config/restore-backup', [AdminConfigurationController::class, 'restoreBackup'])->name('config.restoreBackup');
     Route::post('config', [AdminConfigurationController::class, 'store'])->name('config.store');
     Route::post('config/upload', [AdminConfigurationController::class, 'uploadConfig'])->name('config.upload');
+    Route::post('config/createBackup', [AdminConfigurationController::class, 'createBackup'])->name('config.createBackup');
 
     // User routes (Sin permisos adicionales)
     Route::get('edit-account-info', [UserController::class, 'accountInfo'])->name('account.info');

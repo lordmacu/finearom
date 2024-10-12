@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PurchaseOrderImport;
+use App\Jobs\BackupDatabaseJob;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 use App\Models\Process as p;
@@ -45,6 +46,13 @@ class AdminConfigurationController extends Controller
             'backups' => $backups,
 
         ]);
+    }
+
+    public function createBackup(){
+
+        dispatch_sync(new BackupDatabaseJob()); // Despachar el Job sincrónicamente
+        echo '<p>Backup ejecutado. <a href="/admin/config">Volver a la configuración de administración</a></p>';
+
     }
 
     /**
@@ -108,11 +116,11 @@ class AdminConfigurationController extends Controller
         ]);
     
         // Delete all existing records in the processes table
-        Process::truncate();
+        p::truncate();
     
         // Insert the new data
         foreach ($data['rows'] as $row) {
-            Process::create([
+            p::create([
                 'name' => $row['name'],
                 'email' => $row['email'],
                 'process_type' => $row['process_type'],
