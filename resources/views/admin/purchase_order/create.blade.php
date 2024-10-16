@@ -5,7 +5,11 @@
     </x-slot>
 
     <div id="app" class="w-full overflow-hidden">
-        <purchase-order-form  :exchange="{{ $exchange }}" :clients="{{ json_encode($clients) }}"></purchase-order-form>
+        <purchase-order-form  
+            :exchange="{{ $exchange }}" 
+            :clients="{{ json_encode($clients) }}"
+            :can-create-purchase-order="{{ json_encode($canCreatePurchaseOrder) }}"
+            ></purchase-order-form>
     </div>
 </x-admin.wrapper>
 
