@@ -1,3 +1,14 @@
+
+@can('purchase_order create')
+    @php
+        $canCreatePurchaseOrder = true;
+    @endphp
+@else
+    @php
+        $canCreatePurchaseOrder = false;
+    @endphp
+@endcan
+
 <!-- resources/views/admin/purchase_order.blade.php -->
 <x-admin.wrapper>
     <x-slot name="title">
