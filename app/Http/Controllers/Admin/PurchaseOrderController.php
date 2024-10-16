@@ -435,6 +435,7 @@ class PurchaseOrderController extends Controller
 
     public function sendStatusChangedEmailsCompleteAndPartial(PurchaseOrder $purchaseOrder)
     {
+        $clientEmail = $purchaseOrder->client->email;
 
         //$clientEmail = 'yocristiangarciaco@gmail.com'; //demo
 
@@ -447,7 +448,7 @@ class PurchaseOrderController extends Controller
         $ccEmails = Process::where('process_type', 'pedido')
             ->pluck('email')
             ->toArray();
-
+        $ccEmails[] = $executiveEmail; 
         $ccEmailsString = implode(',', $ccEmails);
 
         $fromEmail = env('MAIL_USERNAME_FACTURACION');
@@ -468,7 +469,7 @@ class PurchaseOrderController extends Controller
 
         $email = (new Email())
             ->from($fromEmail)
-            ->to($executiveEmail)
+            ->to($clientEmail)
             ->cc(...$ccAddresses)  // Desempaquetar el array para pasarlo como argumentos separados
             ->subject('Re: Orden de Compra - ' . $purchaseOrder->order_consecutive)
             ->html(view('emails.purchase_order_email_complete_partial', ['purchaseOrder' => $purchaseOrder])->render());
