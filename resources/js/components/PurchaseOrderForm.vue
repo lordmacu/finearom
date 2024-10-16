@@ -209,13 +209,13 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end mt-4 space-x-4" v-if="canEditPurchaseOrder">
+                        <div class="flex justify-end mt-4 space-x-4">
                             <div>
                                 <button v-if="purchaseOrder == null" type="submit"
                                     class="bg-green-600 text-white px-4 py-2 rounded">
                                     Crear
                                 </button>
-                                <button v-if="purchaseOrder" type="submit"
+                                <button v-if="purchaseOrder  && canEditPurchaseOrder" type="submit"
                                     class="bg-green-600 text-white px-4 py-2 rounded">
                                     Actualizar
                                 </button>
