@@ -211,7 +211,7 @@
 
                         <div class="flex justify-end mt-4 space-x-4">
                             <div>
-                                <button v-if="purchaseOrder == null" type="submit"
+                                <button v-if="purchaseOrder == null &&  canCreatePurchaseOrder" type="submit"
                                     class="bg-green-600 text-white px-4 py-2 rounded">
                                     Crear
                                 </button>
@@ -230,6 +230,8 @@
 <script>export default {
     props: {
         canEditPurchaseOrder: Boolean,
+        canCreatePurchaseOrder: Boolean,
+
         clients: {
             type: Array,
             required: true
